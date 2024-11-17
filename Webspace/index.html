@@ -41,6 +41,28 @@
     opacity: 0;
     transform: translateY(-20px); /* Position initiale pour l’animation */
         }
+
+        #text-container {
+    overflow: hidden; /* Assure que le contenu hors limites reste invisible */
+    position: absolute;
+    height: 60%; /* Assure que le conteneur utilise tout l'espace disponible */
+    top: 5%;
+    left: 10%;
+    width: 80%;
+    height: 60%;
+}
+
+       #text-to-scroll {
+    position: absolute;
+    width: 100%; /* Assure que le texte occupe la largeur disponible */
+    text-align: center; /* Centre horizontalement le texte */
+}
+
+
+
+
+
+
   
     </style>
 </head>
@@ -63,15 +85,18 @@
         </nav>
     </header>
 
-    <section class="text-center py-20">
-        <h1 id="welcome-title" class="text-4xl font-bold text-white md:text-5xl opacity-0 translate-y-10">Bienvenue sur WebSpace !</h1>
-        <p id="welcome-text" class="mt-4 text-lg text-white max-w-2xl mx-auto opacity-0 translate-y-10">
-            Votre partenaire digital pour donner vie à vos projets en ligne. De la création de sites web au marketing digital,
-            nous vous aidons à transformer votre vision en une présence numérique impactante.
-        </p>
-        <blockquote id="welcome-quote" class="mt-6 italic text-white opacity-0 translate-y-10">
-            "Le progrès commence par une idée. Chez WebSpace, nous transformons vos idées en succès numériques."
-        </blockquote>
+    <section class="text-center py-20 relative">
+        <!-- Conteneur de l'écran avec l'image de l'écran -->
+    <div class="relative mx-auto w-96 h-72" style="background-image: url('images/écran3.png'); background-size: cover; background-position: center;">
+        <!-- Conteneur pour le texte qui défile -->
+        <div id="text-container" class="absolute w-[70%] h-[50%] top-[25%] left-[15%] overflow-hidden">
+            <div id="text-to-scroll" class="text-white text-center leading-5 space-y-2">
+                <p class="font-bold text-xl md:text-2xl">Bienvenue sur WebSpace !</p>
+                <p class="text-base md:text-lg">Votre partenaire digital pour donner vie à vos projets en ligne.</p>
+                <p class="italic text-sm md:text-lg">Transformez vos idées en succès numériques avec nous !</p>
+            </div>
+        </div>
+    </div>
     </section>
     <section id="qui-sommes-nous" class="py-16 px-5 text-center bg-white bg-opacity-10 text-white rounded-lg shadow-lg max-w-3xl mx-auto my-8">
         <h2 class="text-3xl font-bold mb-5">Qui sommes-nous</h2>

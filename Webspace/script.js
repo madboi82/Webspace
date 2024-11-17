@@ -97,3 +97,27 @@ gsap.fromTo(
     }, 5000);
 });
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    const textToScroll = document.querySelector('#text-to-scroll');
+    const container = document.querySelector('#text-container');
+    const containerHeight = container.offsetHeight;
+
+    // Animation de défilement avec démarrage et arrêt à l'intérieur de l'écran
+    gsap.fromTo(
+        textToScroll,
+        { y: containerHeight }, // Commence en bas du conteneur
+        {
+            y: -textToScroll.offsetHeight, // Finit en haut du conteneur
+            ease: "linear", // Défilement fluide
+            duration: 10, // Durée d'une boucle complète
+            repeat: -1 // Animation infinie
+        }
+    );
+});
+
+
+
+
+
+
