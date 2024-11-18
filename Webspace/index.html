@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSpace</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <style>
         body {
@@ -34,36 +35,109 @@
         }
 
         #confirmation-message p {
-    margin-top: 10px;
+            margin-top: 10px;
         }
 
         #paper-plane {
-    opacity: 0;
-    transform: translateY(-20px); /* Position initiale pour l’animation */
+            opacity: 0;
+            transform: translateY(-20px); /* Position initiale pour l’animation */
         }
 
         #text-container {
-    overflow: hidden; /* Assure que le contenu hors limites reste invisible */
-    position: absolute;
-    height: 60%; /* Assure que le conteneur utilise tout l'espace disponible */
-    top: 5%;
-    left: 10%;
-    width: 80%;
-    height: 60%;
-}
+           overflow: hidden; /* Assure que le contenu hors limites reste invisible */
+           position: absolute;
+           height: 60%; /* Assure que le conteneur utilise tout l'espace disponible */
+           top: 5%;
+           left: 10%;
+           width: 80%;
+           height: 60%;
+        }
 
        #text-to-scroll {
-    position: absolute;
-    width: 100%; /* Assure que le texte occupe la largeur disponible */
-    text-align: center; /* Centre horizontalement le texte */
+          position: absolute;
+          width: 100%; /* Assure que le texte occupe la largeur disponible */
+          text-align: center; /* Centre horizontalement le texte */
+        }
+
+        .graffiti-font {
+          font-family: 'Honk', sans-serif; /* Utilisation de Honk comme police principale */
+          font-size: 1.2rem; /* Ajustez selon vos préférences */
+          text-shadow: 2px 2px 5px rgba(150, 93, 235, 0.7); /* Ombre pour renforcer l'effet graffiti */
+          line-height: 1.6; /* Espacement pour une meilleure lisibilité */
+        }
+
+        .graffiti-font h2 {
+          font-size: 2rem; /* Taille augmentée pour le titre principal */
+          text-shadow: 3px 3px 6px rgba(150, 93, 235, 0.7);
+          margin-bottom: 0.5rem;
+        }
+
+        .relative mx-auto w-96 h-72{
+          position: absolute;
+          aspect-ratio: 4 / 3;
+          top: 50%; /* Déplace l'écran un peu plus bas dans la fenêtre */
+          left: 50%; /* Centre l'écran horizontalement */
+          transform: translate(-50%, 50%); /* Utilise le transform pour centrer précisément */
+          background-size: contain; /* L'image de l'écran garde sa taille */
+          background-position: center; /* Centre l'image de l'écran */
+          background-repeat: no-repeat; /* Empêche la répétition de l'image */
+          z-index: 1; /* Place l'écran au-dessus de l'arrière-plan */
+
 }
 
+        .background-image {
+          width: 120vw; /* Largeur étendue à 120% de la fenêtre */
+          height: 120vh; /* Hauteur étendue à 120% de la fenêtre */
+          position: relative; /* Permet de sortir du flux normal */
+          padding-top: 40vh;
+          top: -20vh; /* Ajuste la position pour centrer */
+          left: -10vw; /* Ajuste la position pour centrer */
+          background-size: cover; /* Couvre l’espace défini */
+          background-position: center; /* Centre l’image */
+          background-repeat: no-repeat; /* Évite les répétitions */
+          z-index: -1; /* Place l’arrière-plan derrière l’écran */
+          
+    
+        }
+
+        
+        @media (max-width: 480px){
+            .background-image{
+                top: -5vh;
+                
+                
+                
+            }
+
+        }
+
+        @media (max-width: 768px){
+            .background-image{
+                top: -15vh;
+            }
+        }
+
+        @media (max-width: 1978px){
+            .background-image{
+                top: -5vh;
+                padding-top: 60vh;
+            }
+        }
+
+        @media (max-width: 1280px){
+            .background-image{
+                top: -8vh;
+            }
+        }
+
+        
+        
 
 
 
 
 
-  
+
     </style>
 </head>
 <body>
@@ -86,16 +160,19 @@
     </header>
 
     <section class="text-center py-20 relative">
+       <!-- Conteneur de l'écran avec l'image de l'écran -->
+       <div class="background-image" style="background-image: url('images/—Pngtree—neon\ light\ nightclub\ interior\ abstract_3708893.jpg');">
         <!-- Conteneur de l'écran avec l'image de l'écran -->
-    <div class="relative mx-auto w-96 h-72" style="background-image: url('images/écran3.png'); background-size: cover; background-position: center;">
-        <!-- Conteneur pour le texte qui défile -->
-        <div id="text-container" class="absolute w-[70%] h-[50%] top-[25%] left-[15%] overflow-hidden">
-            <div id="text-to-scroll" class="text-white text-center leading-5 space-y-2">
-                <p class="font-bold text-xl md:text-2xl">Bienvenue sur WebSpace !</p>
+        <div class="relative mx-auto w-96 h-72" style="background-image: url('images/écran3.png'); background-size: cover; background-position: center;">
+          <!-- Conteneur pour le texte qui défile -->
+          <div id="text-container" class="absolute w-[70%] h-[50%] top-[25%] left-[15%] overflow-hidden">
+            <div id="text-to-scroll" class="graffiti-font text-center leading-5 space-y-2">
+                <h2 class="font-bold text-xl md:text-2xl">Bienvenue sur WebSpace !</h2>
                 <p class="text-base md:text-lg">Votre partenaire digital pour donner vie à vos projets en ligne.</p>
                 <p class="italic text-sm md:text-lg">Transformez vos idées en succès numériques avec nous !</p>
             </div>
         </div>
+      </div>
     </div>
     </section>
     <section id="qui-sommes-nous" class="py-16 px-5 text-center bg-white bg-opacity-10 text-white rounded-lg shadow-lg max-w-3xl mx-auto my-8">
