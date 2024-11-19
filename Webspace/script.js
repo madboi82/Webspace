@@ -7,11 +7,9 @@
      navbar.classList.toggle("flex");
  });
 
- // Animation GSAP pour le texte de bienvenue
- gsap.fromTo("#welcome-title", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 0.5 });
- gsap.fromTo("#welcome-text", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 1 });
- gsap.fromTo("#welcome-quote", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1, delay: 1.5 });
 
+ document.addEventListener('DOMContentLoaded', () => {
+ 
  // Animation GSAP pour le logo
  gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, duration: 1.5 });
 
@@ -22,7 +20,63 @@ gsap.to("#logo", {
     ease: "bounce.out",
     repeat: -1,
     yoyo: true
-});
+  });
+
+  // Cible le conteneur
+  const screenContainer = document.getElementById('screen-container');
+    
+  // Animation GSAP
+  gsap.fromTo(screenContainer, 
+      {
+          opacity: 0,        // Départ invisible
+          y: 100,            // Position initiale (hors de l'écran vers le bas)
+      }, 
+      {
+          opacity: 1,        // Apparition
+          y: 0,              // Position finale (dans le cadre)
+          duration: 1,       // Durée de l'animation en secondes
+          ease: "power3.out" // Courbe d'accélération pour un effet fluide
+      }
+  );
+
+  // Animation du conteneur principal
+  const screen = document.getElementById('screen-container');
+  const welcomeTitle = document.getElementById('welcome-title');
+  const welcomeText = document.getElementById('welcome-text');
+  const welcomeQuote = document.getElementById('welcome-quote');
+
+  // Timeline pour les animations
+  const timeline = gsap.timeline();
+
+  // Animation du conteneur
+  timeline.fromTo(
+      screenContainer, 
+      { opacity: 0, y: 100 }, 
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+  );
+
+  // Animation des textes (en séquence)
+  timeline.fromTo(
+      welcomeTitle,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      "-=0.4" // Début légèrement avant la fin de l'animation précédente
+  )
+  .fromTo(
+      welcomeText,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      "-=0.3"
+  )
+  .fromTo(
+      welcomeQuote,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+      "-=0.2"
+ )
+
+ });
+
 
  // Animation pour les sous-services
  const services = document.querySelectorAll('.service');

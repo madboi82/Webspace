@@ -26,7 +26,6 @@
 
         
 
-
         .sub-service {
             display: none; /* Cacher par défaut */
         }
@@ -89,7 +88,7 @@
           background-repeat: no-repeat; /* Empêche la répétition de l'image */
           z-index: 1; /* Place l'écran au-dessus de l'arrière-plan */
 
-}
+        }
 
         .background-image {
           width: 120%; /* Largeur étendue à 120% de la fenêtre */
@@ -136,20 +135,13 @@
             }
         }
 
-        
-        
-
-
-
-
-
 
     </style>
 </head>
 <body>
     <header class="flex justify-between items-center p-5">
         <div class="text-2xl font-bold text-white">
-            <img src="images/Design sans titre (1).png" alt="WebSpace" class="h-16 md:h-20 lg:h-24" id="logo"> <!-- Ajout de l'ID pour l'animation -->
+            <a href=""><img src="images/Design sans titre (1).png" alt="WebSpace" class="h-16 md:h-20 lg:h-24" id="logo"></a> <!-- Ajout de l'ID pour l'animation -->
         </div>
         <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -169,13 +161,13 @@
        <!-- Conteneur de l'écran avec l'image de l'écran -->
        <div class="background-image" style="background-image: url('images/—Pngtree—neon\ light\ nightclub\ interior\ abstract_3708893.jpg');">
         <!-- Conteneur de l'écran avec l'image de l'écran -->
-        <div class="relative mx-auto w-96 h-72" style="background-image: url('images/écran3.png'); background-size: cover; background-position: center;">
+        <div class="relative mx-auto w-96 h-72" id="screen-container" style="background-image: url('images/écran3.png'); background-size: cover; background-position: center;">
           <!-- Conteneur pour le texte qui défile -->
           <div id="text-container" class="absolute w-[70%] h-[50%] top-[25%] left-[15%] overflow-hidden">
             <div id="text-to-scroll" class="graffiti-font text-center leading-5 space-y-2">
-                <h2 class="font-bold text-xl md:text-2xl">Bienvenue sur WebSpace !</h2>
-                <p class="text-base md:text-lg">Votre partenaire digital pour donner vie à vos projets en ligne.</p>
-                <p class="italic text-sm md:text-lg">Transformez vos idées en succès numériques avec nous !</p>
+                <h2 class="font-bold text-xl md:text-2xl" id="welcome-title">Bienvenue sur WebSpace !</h2>
+                <p class="text-base md:text-lg" id="welcome-text">Votre partenaire digital pour donner vie à vos projets en ligne.</p>
+                <p class="italic text-sm md:text-lg" id="welcome-quote">Transformez vos idées en succès numériques avec nous !</p>
             </div>
         </div>
       </div>
@@ -218,7 +210,7 @@
                         </div>
                     </div>
                     <p class="text-white">Nous concevons des sites web attrayants et efficaces pour présenter votre activité.</p>
-                    <a href="#top" class="text-pink-300 hover:underline mt-2 block">Retour en haut</a>
+                    <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
                 </div>
                 <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service">
                     <h3 class="text-xl font-bold text-white">Référencement de sites web </h3>
@@ -229,7 +221,7 @@
                         </div>
                     </div>
                     <p class="text-white">Optimisez votre visibilité en ligne avec notre expertise en référencement payant.</p>
-                    <a href="#top" class="text-pink-300 hover:underline mt-2 block">Retour en haut</a>
+                    <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
                 </div>
                 <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service">
                     <h3 class="text-xl font-bold text-white">Présence sur le web </h3>
@@ -240,7 +232,7 @@
                         </div>
                     </div>
                     <p class="text-white">Améliorez votre présence en ligne avec google business profile.</p>
-                    <a href="#top" class="text-pink-300 hover:underline mt-2 block">Retour en haut</a>
+                    <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
                 </div>
                 <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service">
                     <h3 class="text-xl font-bold text-white">Carte NFC</h3>
@@ -251,7 +243,7 @@
                         </div>
                     </div>
                     <p class="text-white">Facilitez la collecte d'avis clients grâce à notre solution de carte NFC.</p>
-                    <a href="#top" class="text-pink-300 hover:underline mt-2 block">Retour en haut</a>
+                    <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
                 </div>
             </div>
         </section>
@@ -259,10 +251,10 @@
         <section id="nous-contacter" class="px-5 py-10">
             <h2 class="text-3xl font-bold text-white text-center mb-8">Nous Contacter</h2>
             <form class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg mx-auto max-w-md">
-                <input class="w-full mb-3 p-2 rounded" type="text" name="prenom" placeholder="Prénom" required>
-                <input class="w-full mb-3 p-2 rounded" type="text" name="nom" placeholder="Nom" required>
-                <input class="w-full mb-3 p-2 rounded" type="email" name="email" placeholder="Adresse mail" required>
-                <textarea class="w-full mb-3 p-2 rounded" name="message" placeholder="Votre message" required></textarea>
+                <input class="w-full mb-3 p-2 rounded" type="text" name="prenom" placeholder="Prénom" autocomplete="prenom" required >
+                <input class="w-full mb-3 p-2 rounded" type="text" name="nom" placeholder="Nom" autocomplete="nom" required >
+                <input class="w-full mb-3 p-2 rounded" type="email" name="email" placeholder="Adresse mail" autocomplete="email" required >
+                <textarea class="w-full mb-3 p-2 rounded" name="message" placeholder="Votre message" autocomplete="message" required></textarea>
                 <button class="w-full bg-pink-500 text-white p-2 rounded hover:bg-pink-600" type="submit">Envoyer</button>
             </form>
             <div id="confirmation-message" class="hidden text-pink-400 text-center mt-4">
