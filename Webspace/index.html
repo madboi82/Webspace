@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSpace</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Honk&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
     <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
 
         html, body{
             overflow-x: hidden;
@@ -77,11 +82,11 @@
           margin-bottom: 0.5rem;
         }
 
-        .relative mx-auto w-96 h-72{
-          position: absolute;
-          aspect-ratio: 4 / 3;
-          top: 50%; /* Déplace l'écran un peu plus bas dans la fenêtre */
-          left: 50%; /* Centre l'écran horizontalement */
+        #screen-container{
+          position: absolute !important;
+          aspect-ratio: 4/ 3;
+          top: 35% !important; /* Déplace l'écran un peu plus bas dans la fenêtre */
+          left: 50% ; /* Centre l'écran horizontalement */
           transform: translate(-50%, 50%); /* Utilise le transform pour centrer précisément */
           background-size: contain; /* L'image de l'écran garde sa taille */
           background-position: center; /* Centre l'image de l'écran */
@@ -92,9 +97,9 @@
 
         .background-image {
           width: 120%; /* Largeur étendue à 120% de la fenêtre */
-          height: 120vh; /* Hauteur étendue à 120% de la fenêtre */
+          height: 100vh; /* Hauteur étendue à 120% de la fenêtre */
           position: relative; /* Permet de sortir du flux normal */
-          padding-top: 40vh;
+          margin-top: 0;
           top: -20vh; /* Ajuste la position pour centrer */
           left: -10vw; /* Ajuste la position pour centrer */
           background-size: cover; /* Couvre l’espace défini */
@@ -118,7 +123,7 @@
 
         @media (max-width: 768px){
             .background-image{
-                top: -15vh;
+                top: 40%;
             }
         }
 
@@ -201,11 +206,11 @@
                     <h3 class="text-xl font-bold text-white">Création de sites web</h3>
                     <div class="sub-service flex mt-2"> <!-- Flex pour aligner horizontalement -->
                         <div>
-                            <img src="images/vitrine (1).png" class="block mx-auto">
+                            <img src="images/vitrine (1).png" class="block mx-auto" alt="site vitrine">
                             <p class="text-white">Site vitrine</p>
                         </div>
                         <div>
-                            <img src="images/dossier-portfolio.png" class="block mx-auto">
+                            <img src="images/dossier-portfolio.png" class="block mx-auto" alt="Portfolio">
                             <p class="text-white text-center">Portfolio</p>
                         </div>
                     </div>
@@ -216,7 +221,7 @@
                     <h3 class="text-xl font-bold text-white">Référencement de sites web </h3>
                     <div class="sub-service flex mt-2">
                         <div>
-                            <img src="images/lanalyse-des-donnees.png" class="block mx-auto">
+                            <img src="images/lanalyse-des-donnees.png" class="block mx-auto" alt="analyse données">
                             <p class="text-white text-center">Google Ads</p>
                         </div>
                     </div>
@@ -227,7 +232,7 @@
                     <h3 class="text-xl font-bold text-white">Présence sur le web </h3>
                     <div class="sub-service flex mt-2">
                         <div>
-                            <img src="images/profil.png" class="block mx-auto">
+                            <img src="images/profil.png" class="block mx-auto" alt="profil">
                             <p class="text-white">Business Profile</p>
                         </div>
                     </div>

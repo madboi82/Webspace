@@ -1,3 +1,19 @@
+// Comportement contrôlé lors du chargement des polices
+WebFont.load({
+    google: {
+        families: ['Honk']
+    },
+    active: function() {
+        document.getElementById('text-to-scroll').style.visibility = 'visible';
+    },
+    inactive: function() {
+        console.warn('Police non chargée, fallback utilisée.');
+    }
+});
+
+
+
+
 // Script pour le menu hamburger
  const menuToggle = document.getElementById("menu-toggle");
  const navbar = document.getElementById("navbar");
