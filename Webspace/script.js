@@ -1,56 +1,108 @@
- // Scene, camera, renderer setup
- const scene = new THREE.Scene();
- const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
- const renderer = new THREE.WebGLRenderer();
- renderer.setSize(window.innerWidth, window.innerHeight);
- document.getElementById('container').appendChild(renderer.domElement);
+// Scene, camera, renderer setup
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('container').appendChild(renderer.domElement);
 
- // Add lighting
- const light = new THREE.AmbientLight(0x404040); // soft white light
- scene.add(light);
+// Change the background color of the scene to a light color
+renderer.setClearColor(0x333333, 1); // Couleur de fond gris foncé
 
- // Load GLB model
- const loader = new THREE.GLTFLoader();
- loader.load('assets/scène.3D/asteroid_with_resources.glb', function(gltf) {
-     scene.add(gltf.scene);
-     gltf.scene.scale.set(1, 1, 1); // Adjust the scale
- });
+// Add lighting
+const light = new THREE.AmbientLight(0x404040); // soft white light
+scene.add(light);
 
- // Camera position
- camera.position.z = 5;
+// Add a directional light
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // White directional light
+directionalLight.position.set(5, 5, 5).normalize(); // Position light
+scene.add(directionalLight);
 
- // Render loop
- function animate() {
-     requestAnimationFrame(animate);
-     renderer.render(scene, camera);
- }
- animate();
+// Load GLB model
+const loader = new THREE.GLTFLoader();
+let asteroid = null;  // Initialisation de la variable pour stocker l'astéroïde
 
+loader.load('assets/scène.3D/asteroid_with_resources.glb', function(gltf) {
+    asteroid = gltf.scene; // Assignez l'astéroïde chargé à la variable 'asteroid'
+    scene.add(asteroid);
+    asteroid.scale.set(0.5, 0.5, 0.5); // Ajuster la taille
+    asteroid.position.set(0, 0, 0);  // Positionner l'astéroïde au centre
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Comportement contrôlé lors du chargement des polices
-WebFont.load({
-    google: {
-        families: ['Honk']
-    },
-    active: function() {
-        document.getElementById('text-to-scroll').style.visibility = 'visible';
-    },
-    inactive: function() {
-        console.warn('Police non chargée, fallback utilisée.');
-    }
+    // Réajuster la caméra pour qu'elle regarde le modèle
+    camera.lookAt(asteroid.position);
+}, undefined, function(error) {
+    console.error(error); // Affiche les erreurs dans la console si le modèle ne se charge pas
 });
+
+// Camera position
+camera.position.z = 10;
+
+// Variables pour gérer la rotation avec la souris
+let isLeftClick = false;  // Booléen pour vérifier si le clic gauche est maintenu
+let lastMouseX = 0;        // Dernière position X de la souris
+let lastMouseY = 0;        // Dernière position Y de la souris
+let rotationSpeed = 0.005; // Vitesse de rotation
+
+// Fonction pour gérer le clic gauche
+function onMouseDown(event) {
+    if (event.button === 0) {  // Si c'est le clic gauche (button 0)
+        isLeftClick = true;
+        lastMouseX = event.clientX;
+        lastMouseY = event.clientY;
+    }
+}
+
+// Fonction pour gérer le relâchement du clic gauche
+function onMouseUp(event) {
+    if (event.button === 0) {  // Si c'est le clic gauche (button 0)
+        isLeftClick = false;
+    }
+}
+
+// Fonction pour gérer le mouvement de la souris
+function onMouseMove(event) {
+    if (isLeftClick && asteroid) {
+        // Calculer les déplacements de la souris
+        let deltaX = event.clientX - lastMouseX;
+        let deltaY = event.clientY - lastMouseY;
+
+        // Appliquer la rotation sur l'astéroïde
+        asteroid.rotation.y += deltaX * rotationSpeed;  // Rotation autour de l'axe Y
+        asteroid.rotation.x += deltaY * rotationSpeed;  // Rotation autour de l'axe X
+
+        // Mettre à jour la dernière position de la souris
+        lastMouseX = event.clientX;
+        lastMouseY = event.clientY;
+    }
+}
+
+// Ajouter les événements de souris pour le clic gauche et le mouvement
+window.addEventListener('mousedown', onMouseDown, false);
+window.addEventListener('mouseup', onMouseUp, false);
+window.addEventListener('mousemove', onMouseMove, false);
+
+// Prévenir le menu contextuel du clic droit (clic droit souris)
+window.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+
+// Render loop
+function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+animate();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -79,58 +131,12 @@ gsap.to("#logo", {
     yoyo: true
   });
 
-  // Cible le conteneur
-  const screenContainer = document.getElementById('screen-container');
-    
-  // Animation GSAP
-  gsap.fromTo(screenContainer, 
-      {
-          opacity: 0,        // Départ invisible
-          y: 100,            // Position initiale (hors de l'écran vers le bas)
-      }, 
-      {
-          opacity: 1,        // Apparition
-          y: 0,              // Position finale (dans le cadre)
-          duration: 1,       // Durée de l'animation en secondes
-          ease: "power3.out" // Courbe d'accélération pour un effet fluide
-      }
-  );
+  
 
-  // Animation du conteneur principal
-  const screen = document.getElementById('screen-container');
-  const welcomeTitle = document.getElementById('welcome-title');
-  const welcomeText = document.getElementById('welcome-text');
-  const welcomeQuote = document.getElementById('welcome-quote');
 
   // Timeline pour les animations
   const timeline = gsap.timeline();
 
-  // Animation du conteneur
-  timeline.fromTo(
-      screenContainer, 
-      { opacity: 0, y: 100 }, 
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
-  );
-
-  // Animation des textes (en séquence)
-  timeline.fromTo(
-      welcomeTitle,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.4" // Début légèrement avant la fin de l'animation précédente
-  )
-  .fromTo(
-      welcomeText,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.3"
-  )
-  .fromTo(
-      welcomeQuote,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-      "-=0.2"
- )
 
  });
 
@@ -209,23 +215,9 @@ gsap.fromTo(
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    const textToScroll = document.querySelector('#text-to-scroll');
-    const container = document.querySelector('#text-container');
-    const containerHeight = container.offsetHeight;
 
-    // Animation de défilement avec démarrage et arrêt à l'intérieur de l'écran
-    gsap.fromTo(
-        textToScroll,
-        { y: containerHeight }, // Commence en bas du conteneur
-        {
-            y: -textToScroll.offsetHeight, // Finit en haut du conteneur
-            ease: "linear", // Défilement fluide
-            duration: 10, // Durée d'une boucle complète
-            repeat: -1 // Animation infinie
-        }
-    );
-});
+
+    
 
 
 
