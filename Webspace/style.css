@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+
+        html, body{
+            overflow-x: hidden;
+        }
+
+ 
+        body {
+            background: linear-gradient(to right, #1b1f35, #7b2cbf, #d5006d);
+            cursor: url('images/icons8-rocket-48.png'), auto; 
+        }
+        
+        a, button, #scrollToTop {
+            cursor: url('images/icons8-rocket-30.png'), auto;
+            transition: opacity 0.3s ease;
+        }
+
+        #container {
+            width: 100%; /* S'assure que le conteneur occupe toute la largeur */
+            height: 500px; /* Définissez une hauteur explicite */
+            position: relative; /* Assurez-vous qu'il a une position relative pour bien gérer les enfants */
+        }
+        
+
+        
+
+        .sub-service {
+            display: none; /* Cacher par défaut */
+        }
+        .service:hover .sub-service {
+            display: flex; /* Afficher au survol avec flex pour l'alignement en ligne */
+        }
+        .sub-service div {
+            margin-right: 1rem; /* Marge entre les éléments de sous-service */
+            padding: 0.5rem; /* Ajout d'un peu de padding pour le visuel */
+            background: rgba(255, 255, 255, 0.2); /* Fond transparent */
+            border-radius: 5px; /* Coins arrondis */
+        }
+
+        #confirmation-message p {
+            margin-top: 10px;
+        }
+
+        #paper-plane {
+            opacity: 0;
+            transform: translateY(-20px); /* Position initiale pour l’animation */
+        }
+
+        #text-container {
+           overflow: hidden; /* Assure que le contenu hors limites reste invisible */
+           position: absolute;
+           height: 60%; /* Assure que le conteneur utilise tout l'espace disponible */
+           top: 5%;
+           left: 10%;
+           width: 80%;
+           height: 60%;
+        }
+
+       #text-to-scroll {
+          position: absolute;
+          width: 100%; /* Assure que le texte occupe la largeur disponible */
+          text-align: center; /* Centre horizontalement le texte */
+        }
+
+        .graffiti-font {
+          font-family: 'Honk', sans-serif; /* Utilisation de Honk comme police principale */
+          font-size: 1.2rem; /* Ajustez selon vos préférences */
+          text-shadow: 2px 2px 5px rgba(150, 93, 235, 0.7); /* Ombre pour renforcer l'effet graffiti */
+          line-height: 1.6; /* Espacement pour une meilleure lisibilité */
+        }
+
+        .graffiti-font h2 {
+          font-size: 2rem; /* Taille augmentée pour le titre principal */
+          text-shadow: 3px 3px 6px rgba(150, 93, 235, 0.7);
+          margin-bottom: 0.5rem;
+        }
+
+        #screen-container{
+          position: absolute !important;
+          aspect-ratio: 4/ 3;
+          top: 35% !important; /* Déplace l'écran un peu plus bas dans la fenêtre */
+          left: 50% ; /* Centre l'écran horizontalement */
+          transform: translate(-50%, 50%); /* Utilise le transform pour centrer précisément */
+          background-size: contain; /* L'image de l'écran garde sa taille */
+          background-position: center; /* Centre l'image de l'écran */
+          background-repeat: no-repeat; /* Empêche la répétition de l'image */
+          z-index: 1; /* Place l'écran au-dessus de l'arrière-plan */
+
+        }
+
+        .background-image {
+          width: 120%; /* Largeur étendue à 120% de la fenêtre */
+          height: 100vh; /* Hauteur étendue à 120% de la fenêtre */
+          position: relative; /* Permet de sortir du flux normal */
+          margin-top: 0;
+          top: -20vh; /* Ajuste la position pour centrer */
+          left: -10vw; /* Ajuste la position pour centrer */
+          background-size: cover; /* Couvre l’espace défini */
+          background-position: center; /* Centre l’image */
+          background-repeat: no-repeat; /* Évite les répétitions */
+          z-index: -1; /* Place l’arrière-plan derrière l’écran */
+          
+    
+        }
+
+        
+        @media (max-width: 480px){
+            .background-image{
+                top: -5vh;
+                
+                
+                
+            }
+
+        }
+
+        @media (max-width: 768px){
+            .background-image{
+                top: 40%;
+            }
+        }
+
+        @media (max-width: 1978px){
+            .background-image{
+                top: -5vh;
+                padding-top: 60vh;
+            }
+        }
+
+        @media (max-width: 1280px){
+            .background-image{
+                top: -8vh;
+            }
+        }

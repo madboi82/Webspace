@@ -1,3 +1,44 @@
+ // Scene, camera, renderer setup
+ const scene = new THREE.Scene();
+ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+ const renderer = new THREE.WebGLRenderer();
+ renderer.setSize(window.innerWidth, window.innerHeight);
+ document.getElementById('container').appendChild(renderer.domElement);
+
+ // Add lighting
+ const light = new THREE.AmbientLight(0x404040); // soft white light
+ scene.add(light);
+
+ // Load GLB model
+ const loader = new THREE.GLTFLoader();
+ loader.load('assets/scène.3D/asteroid_with_resources.glb', function(gltf) {
+     scene.add(gltf.scene);
+     gltf.scene.scale.set(1, 1, 1); // Adjust the scale
+ });
+
+ // Camera position
+ camera.position.z = 5;
+
+ // Render loop
+ function animate() {
+     requestAnimationFrame(animate);
+     renderer.render(scene, camera);
+ }
+ animate();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Comportement contrôlé lors du chargement des polices
 WebFont.load({
     google: {
@@ -185,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     );
 });
-
 
 
 
