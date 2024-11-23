@@ -1,89 +1,161 @@
 // Scene, camera, renderer setup
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.getElementById('container').appendChild(renderer.domElement);
 
-// Change the background color of the scene to a light color
-renderer.setClearColor(0x333333, 1); // Couleur de fond gris foncé
+// Ensure canvas covers the full screen
+renderer.setPixelRatio(window.devicePixelRatio); 
 
-// Add lighting
-const light = new THREE.AmbientLight(0x404040); // soft white light
-scene.add(light);
+// Charger la vidéo comme texture
+const video = document.createElement('video');
+video.src = 'videos/purpleDice.mp4'; // Chemin vers la vidéo (modifie selon ton projet)
+video.loop = true; // Répéter en boucle
+video.muted = true; // Pas de son
+video.autoplay = true; // Auto play activé
 
-// Add a directional light
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // White directional light
-directionalLight.position.set(5, 5, 5).normalize(); // Position light
-scene.add(directionalLight);
-
-// Load GLB model
-const loader = new THREE.GLTFLoader();
-let asteroid = null;  // Initialisation de la variable pour stocker l'astéroïde
-
-loader.load('assets/scène.3D/asteroid_with_resources.glb', function(gltf) {
-    asteroid = gltf.scene; // Assignez l'astéroïde chargé à la variable 'asteroid'
-    scene.add(asteroid);
-    asteroid.scale.set(0.5, 0.5, 0.5); // Ajuster la taille
-    asteroid.position.set(0, 0, 0);  // Positionner l'astéroïde au centre
-
-    // Réajuster la caméra pour qu'elle regarde le modèle
-    camera.lookAt(asteroid.position);
-}, undefined, function(error) {
-    console.error(error); // Affiche les erreurs dans la console si le modèle ne se charge pas
+// Vérifie et force la lecture après une interaction utilisateur
+video.play().catch(() => {
+    console.log('Lecture automatique bloquée. En attente d’une interaction utilisateur.');
+    window.addEventListener('click', () => {
+        video.play().catch(error => console.error('Error playing the video:', error));
+    });
 });
 
-// Camera position
-camera.position.z = 10;
+// Créer une texture à partir de la vidéo
+const videoTexture = new THREE.VideoTexture(video);
+videoTexture.minFilter = THREE.LinearFilter;
+videoTexture.magFilter = THREE.LinearFilter;
+videoTexture.format = THREE.RGBFormat;
 
-// Variables pour gérer la rotation avec la souris
-let isLeftClick = false;  // Booléen pour vérifier si le clic gauche est maintenu
-let lastMouseX = 0;        // Dernière position X de la souris
-let lastMouseY = 0;        // Dernière position Y de la souris
-let rotationSpeed = 0.005; // Vitesse de rotation
+// Appliquer la vidéo comme arrière-plan de la scène
+scene.background = videoTexture;
 
-// Fonction pour gérer le clic gauche
+
+
+// Add lighting
+const light = new THREE.AmbientLight(0x404040, 2); // lumière plus intense
+scene.add(light);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLight plus intense
+directionalLight.position.set(5, 10, 5).normalize();
+scene.add(directionalLight);
+
+const pointLight = new THREE.PointLight(0xffffff, 1.5); // PointLight pour plus de clarté
+pointLight.position.set(0, 5, 5);
+scene.add(pointLight);
+
+const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1); // HemisphereLight pour une lumière naturelle
+scene.add(hemiLight);
+
+// Load GLB model (comme ton astéroïde)
+const loader = new THREE.GLTFLoader();
+let asteroid = null;
+
+loader.load(
+    'assets/scène.3D/grandmas_tv.glb',
+    function (gltf) {
+        asteroid = gltf.scene;
+        scene.add(asteroid);
+        asteroid.scale.set(0.2, 0.2, 0.2);
+        asteroid.position.set(0, 8, 0);
+
+        // Utiliser une bounding box pour ajuster automatiquement
+        const boundingBox = new THREE.Box3().setFromObject(asteroid);
+        const size = boundingBox.getSize(new THREE.Vector3());
+        const maxDimension = Math.max(size.x, size.y, size.z);
+
+        if (maxDimension > 1) {
+            const scale = 1 / maxDimension; // Ajuste à une taille raisonnable
+            asteroid.scale.set(scale, scale, scale);
+        }
+
+         // Ajuster la caméra pour mieux voir l'objet
+         camera.position.z = Math.min(maxDimension * 1.5, 4.5); // Recule en fonction de la taille
+
+
+        // Center camera on the asteroid
+        const center = boundingBox.getCenter(new THREE.Vector3());
+        camera.lookAt(center);
+
+        // Hide the loading screen once the model is loaded
+        document.getElementById('loading-screen').style.display = 'none';
+    },
+    function (xhr) {
+        const progress = (xhr.loaded / xhr.total) * 100;
+        document.getElementById('progress-bar').style.width = `${progress}%`;
+        document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
+    },
+    function (error) {
+        console.error('An error happened while loading the model:', error);
+    }
+);
+
+
+
+// Variables to handle rotation with the mouse
+let isLeftClick = false;
+let lastMouseX = 0;
+let lastMouseY = 0;
+let rotationSpeed = 0.005;
+
 function onMouseDown(event) {
-    if (event.button === 0) {  // Si c'est le clic gauche (button 0)
+    if (event.button === 0) {
         isLeftClick = true;
         lastMouseX = event.clientX;
         lastMouseY = event.clientY;
     }
 }
 
-// Fonction pour gérer le relâchement du clic gauche
 function onMouseUp(event) {
-    if (event.button === 0) {  // Si c'est le clic gauche (button 0)
+    if (event.button === 0) {
         isLeftClick = false;
     }
 }
 
-// Fonction pour gérer le mouvement de la souris
 function onMouseMove(event) {
     if (isLeftClick && asteroid) {
-        // Calculer les déplacements de la souris
         let deltaX = event.clientX - lastMouseX;
         let deltaY = event.clientY - lastMouseY;
 
-        // Appliquer la rotation sur l'astéroïde
-        asteroid.rotation.y += deltaX * rotationSpeed;  // Rotation autour de l'axe Y
-        asteroid.rotation.x += deltaY * rotationSpeed;  // Rotation autour de l'axe X
+        asteroid.rotation.y += deltaX * rotationSpeed;
+        asteroid.rotation.x += deltaY * rotationSpeed;
 
-        // Mettre à jour la dernière position de la souris
         lastMouseX = event.clientX;
         lastMouseY = event.clientY;
     }
 }
 
-// Ajouter les événements de souris pour le clic gauche et le mouvement
 window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
 window.addEventListener('mousemove', onMouseMove, false);
 
-// Prévenir le menu contextuel du clic droit (clic droit souris)
-window.addEventListener('contextmenu', function(event) {
-    event.preventDefault();
+// Prevent right-click context menu
+window.addEventListener('contextmenu', (event) => event.preventDefault());
+
+// Ensure responsiveness on window resize
+function resizeRenderer() {
+    const container = document.getElementById('container'); // Conteneur de la scène
+    const width = container.offsetWidth; // Largeur actuelle du conteneur
+    const height = container.offsetHeight; // Hauteur actuelle du conteneur
+
+    // Ajuste le renderer pour qu'il corresponde au conteneur
+    renderer.setSize(width, height);
+
+    // Ajuste la caméra pour garder le bon ratio
+    camera.fov = 85;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+}
+
+// Ajoute un écouteur pour gérer les changements de taille
+window.addEventListener('resize', () => {
+    resizeRenderer(); // Ajuste le renderer et la caméra
 });
+
+// Appelle resizeRenderer pour assurer un rendu correct au chargement initial
+resizeRenderer();
 
 // Render loop
 function animate() {
@@ -97,24 +169,18 @@ animate();
 
 
 
-
-
-
-
-
-
-
-
-
-
 // Script pour le menu hamburger
  const menuToggle = document.getElementById("menu-toggle");
- const navbar = document.getElementById("navbar");
+ const mobileNavbar = document.getElementById("mobile-navbar");
+
+
 
  menuToggle.addEventListener("click", () => {
-     navbar.classList.toggle("hidden");
-     navbar.classList.toggle("flex");
- });
+     // Bascule entre afficher et cacher le menu mobile
+    mobileNavbar.classList.toggle("hidden");
+  });
+
+
 
 
  document.addEventListener('DOMContentLoaded', () => {

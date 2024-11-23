@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
-
         html, body{
             overflow-x: hidden;
         }
@@ -20,6 +18,7 @@
             height: 500px; /* Définissez une hauteur explicite */
             position: relative; /* Assurez-vous qu'il a une position relative pour bien gérer les enfants */
         }
+        
         
 
         
@@ -56,37 +55,7 @@
            height: 60%;
         }
 
-       #text-to-scroll {
-          position: absolute;
-          width: 100%; /* Assure que le texte occupe la largeur disponible */
-          text-align: center; /* Centre horizontalement le texte */
-        }
-
-        .graffiti-font {
-          font-family: 'Honk', sans-serif; /* Utilisation de Honk comme police principale */
-          font-size: 1.2rem; /* Ajustez selon vos préférences */
-          text-shadow: 2px 2px 5px rgba(150, 93, 235, 0.7); /* Ombre pour renforcer l'effet graffiti */
-          line-height: 1.6; /* Espacement pour une meilleure lisibilité */
-        }
-
-        .graffiti-font h2 {
-          font-size: 2rem; /* Taille augmentée pour le titre principal */
-          text-shadow: 3px 3px 6px rgba(150, 93, 235, 0.7);
-          margin-bottom: 0.5rem;
-        }
-
-        #screen-container{
-          position: absolute !important;
-          aspect-ratio: 4/ 3;
-          top: 35% !important; /* Déplace l'écran un peu plus bas dans la fenêtre */
-          left: 50% ; /* Centre l'écran horizontalement */
-          transform: translate(-50%, 50%); /* Utilise le transform pour centrer précisément */
-          background-size: contain; /* L'image de l'écran garde sa taille */
-          background-position: center; /* Centre l'image de l'écran */
-          background-repeat: no-repeat; /* Empêche la répétition de l'image */
-          z-index: 1; /* Place l'écran au-dessus de l'arrière-plan */
-
-        }
+      
 
         .background-image {
           width: 120%; /* Largeur étendue à 120% de la fenêtre */
