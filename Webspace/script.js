@@ -156,17 +156,11 @@ animate();
 
 
 
-// Script pour le menu hamburger
- const menuToggle = document.getElementById("menu-toggle");
- const mobileNavbar = document.getElementById("mobile-navbar");
 
 
 
- menuToggle.addEventListener("click", () => {
-     // Bascule entre afficher et cacher le menu mobile
-    mobileNavbar.classList.toggle("hidden");
-  });
 
+  
 
 
 
@@ -190,8 +184,66 @@ gsap.to("#logo", {
   // Timeline pour les animations
   const timeline = gsap.timeline();
 
+// Script pour le menu hamburger
+const menuToggle = document.getElementById("menu-toggle");
+const mobileNavbar = document.getElementById("mobile-navbar");
+
+
+
+menuToggle.addEventListener("click", () => {
+    // Bascule entre afficher et cacher le menu mobile
+   mobileNavbar.classList.toggle("hidden");
+
+   // Si le menu mobile est ouvert, on affiche les sections
+   if (mobileNavbar.classList.contains("hidden") === false) {
+    // Si les sections sont cachées, on les affiche directement
+    if (!sectionsVisible) {
+        contentSections.classList.remove('hidden');
+        container.classList.add('h-3/4'); // Réduit la hauteur de la scène
+        seeMoreButton.textContent = 'Voir moins ↑';
+        sectionsVisible = true; // Met à jour l'état
+    }
+}
 
  });
+
+
+  // Code pour afficher/masquer les sections
+  const seeMoreButton = document.getElementById('see-more-button');
+  const contentSections = document.getElementById('content-sections');
+  const container = document.getElementById('container');
+  const footer = document.getElementById('footer');
+
+  let sectionsVisible = false;
+
+  
+  
+  
+  
+  seeMoreButton.addEventListener('click', () => {
+      sectionsVisible = !sectionsVisible;
+
+      if (sectionsVisible) {
+          // Affiche les sections
+          footer.classList.remove('hidden');
+          contentSections.classList.remove('hidden');
+          container.classList.add('h-3/4'); // Réduit la hauteur de la scène
+          seeMoreButton.textContent = 'Voir moins ↑';
+      } else {
+          // Cache les sections
+          footer.classList.add('hidden');
+          contentSections.classList.add('hidden');
+          container.classList.remove('h-3/4');
+          container.classList.add('h-screen'); // Étend la scène
+          seeMoreButton.textContent = 'Voir plus ↓';
+      }
+  });
+});
+
+
+ 
+
+ 
 
 
  // Animation pour les sous-services
