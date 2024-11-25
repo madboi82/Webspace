@@ -2,54 +2,53 @@
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('container').appendChild(renderer.domElement);
+renderer.setPixelRatio(window.devicePixelRatio);
 
-// Ensure canvas covers the full screen
-renderer.setPixelRatio(window.devicePixelRatio); 
+// Ajout au conteneur "scene-container" du DOM
+const container = document.getElementById('scene-container');
+renderer.setSize(container.offsetWidth, container.offsetHeight);
+container.appendChild(renderer.domElement);
 
 // Charger la vidéo comme texture
 const video = document.createElement('video');
-video.src = 'videos/purpleDice.mp4'; // Chemin vers la vidéo (modifie selon ton projet)
-video.loop = true; // Répéter en boucle
-video.muted = true; // Pas de son
-video.autoplay = true; // Auto play activé
+video.src = 'videos/purpleDice.mp4'; // Chemin vers la vidéo
+video.loop = true;
+video.muted = true;
+video.autoplay = true;
 
-// Vérifie et force la lecture après une interaction utilisateur
+// Lecture forcée après interaction utilisateur
 video.play().catch(() => {
     console.log('Lecture automatique bloquée. En attente d’une interaction utilisateur.');
     window.addEventListener('click', () => {
-        video.play().catch(error => console.error('Error playing the video:', error));
+        video.play().catch((error) => console.error('Erreur lecture vidéo:', error));
     });
 });
 
-// Créer une texture à partir de la vidéo
+// Création texture vidéo
 const videoTexture = new THREE.VideoTexture(video);
 videoTexture.minFilter = THREE.LinearFilter;
 videoTexture.magFilter = THREE.LinearFilter;
 videoTexture.format = THREE.RGBFormat;
 
-// Appliquer la vidéo comme arrière-plan de la scène
+// Vidéo comme arrière-plan
 scene.background = videoTexture;
 
-
-
-// Add lighting
-const light = new THREE.AmbientLight(0x404040, 2); // lumière plus intense
+// Lumières
+const light = new THREE.AmbientLight(0x404040, 2);
 scene.add(light);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 2); // DirectionalLight plus intense
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
 directionalLight.position.set(5, 10, 5).normalize();
 scene.add(directionalLight);
 
-const pointLight = new THREE.PointLight(0xffffff, 1.5); // PointLight pour plus de clarté
+const pointLight = new THREE.PointLight(0xffffff, 1.5);
 pointLight.position.set(0, 5, 5);
 scene.add(pointLight);
 
-const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1); // HemisphereLight pour une lumière naturelle
+const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemiLight);
 
-// Load GLB model (comme ton astéroïde)
+// Charger le modèle GLB
 const loader = new THREE.GLTFLoader();
 let asteroid = null;
 
@@ -61,25 +60,24 @@ loader.load(
         asteroid.scale.set(0.2, 0.2, 0.2);
         asteroid.position.set(0, 8, 0);
 
-        // Utiliser une bounding box pour ajuster automatiquement
+        // Bounding box pour ajustement
         const boundingBox = new THREE.Box3().setFromObject(asteroid);
         const size = boundingBox.getSize(new THREE.Vector3());
         const maxDimension = Math.max(size.x, size.y, size.z);
 
         if (maxDimension > 1) {
-            const scale = 1 / maxDimension; // Ajuste à une taille raisonnable
+            const scale = 1 / maxDimension;
             asteroid.scale.set(scale, scale, scale);
         }
 
-         // Ajuster la caméra pour mieux voir l'objet
-         camera.position.z = Math.min(maxDimension * 1.5, 4.5); // Recule en fonction de la taille
+        // Ajustement caméra
+        camera.position.z = Math.min(maxDimension * 1.5, 4.5);
 
-
-        // Center camera on the asteroid
+        // Centrer la caméra
         const center = boundingBox.getCenter(new THREE.Vector3());
         camera.lookAt(center);
 
-        // Hide the loading screen once the model is loaded
+        // Masquer l'écran de chargement
         document.getElementById('loading-screen').style.display = 'none';
     },
     function (xhr) {
@@ -88,13 +86,11 @@ loader.load(
         document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
     },
     function (error) {
-        console.error('An error happened while loading the model:', error);
+        console.error('Erreur chargement modèle:', error);
     }
 );
 
-
-
-// Variables to handle rotation with the mouse
+// Variables pour rotation via souris
 let isLeftClick = false;
 let lastMouseX = 0;
 let lastMouseY = 0;
@@ -116,8 +112,8 @@ function onMouseUp(event) {
 
 function onMouseMove(event) {
     if (isLeftClick && asteroid) {
-        let deltaX = event.clientX - lastMouseX;
-        let deltaY = event.clientY - lastMouseY;
+        const deltaX = event.clientX - lastMouseX;
+        const deltaY = event.clientY - lastMouseY;
 
         asteroid.rotation.y += deltaX * rotationSpeed;
         asteroid.rotation.x += deltaY * rotationSpeed;
@@ -131,38 +127,29 @@ window.addEventListener('mousedown', onMouseDown, false);
 window.addEventListener('mouseup', onMouseUp, false);
 window.addEventListener('mousemove', onMouseMove, false);
 
-// Prevent right-click context menu
+// Empêcher le clic droit
 window.addEventListener('contextmenu', (event) => event.preventDefault());
 
-// Ensure responsiveness on window resize
+// Redimensionnement pour correspondre au conteneur
 function resizeRenderer() {
-    const container = document.getElementById('container'); // Conteneur de la scène
-    const width = container.offsetWidth; // Largeur actuelle du conteneur
-    const height = container.offsetHeight; // Hauteur actuelle du conteneur
+    const width = container.offsetWidth;
+    const height = container.offsetHeight;
 
-    // Ajuste le renderer pour qu'il corresponde au conteneur
     renderer.setSize(width, height);
-
-    // Ajuste la caméra pour garder le bon ratio
-    camera.fov = 85;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 }
 
-// Ajoute un écouteur pour gérer les changements de taille
-window.addEventListener('resize', () => {
-    resizeRenderer(); // Ajuste le renderer et la caméra
-});
+window.addEventListener('resize', resizeRenderer);
+resizeRenderer(); // Initial resize
 
-// Appelle resizeRenderer pour assurer un rendu correct au chargement initial
-resizeRenderer();
-
-// Render loop
+// Boucle d'animation
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 }
 animate();
+
 
 
 

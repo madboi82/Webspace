@@ -18,11 +18,12 @@
     
 </head>
 <body>
+    <div class="relative h-screen w-full overflow-hidden" id="scene-container">
     <header class="flex justify-between items-center p-5">
         <div class="text-2xl font-bold text-white">
             <a href=""><img src="images/Design sans titre (1).png" alt="WebSpace" class="h-16 md:h-20 lg:h-24" id="logo"></a> <!-- Ajout de l'ID pour l'animation -->
         </div>
-        <button id="menu-toggle" class="text-white focus:outline-none">
+        <button id="menu-toggle" class="text-white focus:outline-none mr-4">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
@@ -36,7 +37,7 @@
         </nav>
     </header>
 
-    <section class="relative h-screen w-full overflow-hidden" id="scene-container">
+    
        <!-- Conteneur de l'écran avec l'image de l'écran -->
        <div id="container" class="absolute inset-0">
           <!-- Affichage du chargement -->
@@ -47,9 +48,10 @@
             </div>
             <p id="progress-text" class="text-white text-sm mt-2">0%</p>
         </div>
-        
+      </div>
     </div>
-    </section>
+    
+    
     <section id="qui-sommes-nous" class="py-16 px-5 text-center bg-white bg-opacity-10 text-white rounded-lg shadow-lg max-w-3xl mx-auto my-8">
         <h2 class="text-3xl font-bold mb-5">Qui sommes-nous</h2>
         <p class="text-lg mb-4">

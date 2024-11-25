@@ -13,11 +13,30 @@
             transition: opacity 0.3s ease;
         }
 
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            background: transparent; /* Rend le header transparent par défaut */
+        }
+
         #container {
             width: 100%; /* S'assure que le conteneur occupe toute la largeur */
             height: 500px; /* Définissez une hauteur explicite */
-            position: relative; /* Assurez-vous qu'il a une position relative pour bien gérer les enfants */
+            position: absolute; /* Assurez-vous qu'il a une position relative pour bien gérer les enfants */
+            top: 0;
         }
+
+        #scene-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        
         
         
 
@@ -45,15 +64,7 @@
             transform: translateY(-20px); /* Position initiale pour l’animation */
         }
 
-        #text-container {
-           overflow: hidden; /* Assure que le contenu hors limites reste invisible */
-           position: absolute;
-           height: 60%; /* Assure que le conteneur utilise tout l'espace disponible */
-           top: 5%;
-           left: 10%;
-           width: 80%;
-           height: 60%;
-        }
+        
 
       
 
