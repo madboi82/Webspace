@@ -61,6 +61,65 @@ header {
     overflow: hidden;
 }
 
+/* Media query pour les petits écrans */
+@media (max-width: 768px) {
+    #mobile-navbar {
+        /* Passer à une disposition verticale pour les petits écrans */
+        flex-direction: column;
+        align-items: center; /* Centrer les éléments */
+        padding: 20px; /* Augmenter l'espacement interne pour aérer le contenu */
+        top: 60px; /* Aligner avec le bouton du menu */
+        right: 10px;
+        width: 80%; /* Réduire la largeur pour plus d'espace */
+    }
+
+    #mobile-navbar ul {
+        flex-direction: column; /* Organiser les éléments du menu en colonne */
+        padding: 0; /* Retirer le padding inutile */
+        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
+    }
+
+    #mobile-navbar ul li {
+        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
+    }
+
+    #menu-toggle {
+        /* Ajuster le bouton du menu pour les petits écrans */
+        top: 15px;
+        right: 20px;
+    }
+
+    /* Réduire la taille du logo pour les petits écrans */
+    #logo {
+        height: 40px; /* Taille plus petite pour s'adapter à l'écran */
+    }
+}
+
+/* Media query pour les très petits écrans (max-width: 480px) */
+@media (max-width: 480px) {
+    #mobile-navbar {
+        width: 90%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
+        top: 50px; /* Ajuster la position pour bien aligner le navbar avec le menu */
+    }
+
+    #mobile-navbar ul li {
+        font-size: 1rem; /* Réduire la taille de la police des éléments de menu */
+        text-align: center; /* Centrer les éléments */
+    }
+
+    /* Ajustement pour améliorer l'apparence générale */
+    #menu-toggle {
+        top: 10px;
+        right: 15px;
+    }
+
+    /* Redimensionner le logo encore plus petit */
+    #logo {
+        height: 35px;
+    }
+}
+
+
 
 
 
