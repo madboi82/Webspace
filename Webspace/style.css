@@ -22,6 +22,31 @@ header {
     background: transparent; /* Rend le header transparent par défaut */
 }
 
+#mobile-navbar {
+    transition: all 0.3s ease; /* Animation d'ouverture/fermeture */
+}
+
+#mobile-navbar.open {
+    position: absolute; /* Pour pouvoir le positionner précisément */
+    top: 50px;             /* Aligne avec le haut */
+    right: 10px;           /* Place à droite */
+    background: rgba(0, 0, 0, 0.9); /* Fond sombre pour le menu */
+    padding: 10px;      /* Espacement interne */
+    border-radius: 8px; /* Coins arrondis */
+    display: flex;      /* Organisation flexible */
+    flex-direction: row; /* Menu en ligne */
+    justify-content: space-around; /* Espacement équilibré */
+    z-index: 100;       /* Au-dessus des autres éléments */
+  }
+  
+  #menu-toggle {
+    position: absolute;
+    top: 10px;          /* Positionne légèrement en dessous */
+    right: 20px;        /* Place à droite */
+    z-index: 110;       /* Juste au-dessus du menu */
+  }
+  
+
 #container {
     width: 100%; /* S'assure que le conteneur occupe toute la largeur */
     height: 500px; /* Définissez une hauteur explicite */

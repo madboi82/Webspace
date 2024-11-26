@@ -23,13 +23,13 @@
         <div class="text-2xl font-bold text-white">
             <a href=""><img src="images/Design sans titre (1).png" alt="WebSpace" class="h-16 md:h-20 lg:h-24" id="logo"></a> <!-- Ajout de l'ID pour l'animation -->
         </div>
-        <button id="menu-toggle" class="text-white focus:outline-none mr-4">
+        <button id="menu-toggle" class="absolute top-3 right-6 z-50 text-white">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
             </svg>
         </button>
-        <nav id="mobile-navbar" class="hidden ">
-            <ul class="flex flex-col space-x-5 p-5 bg-black bg-opacity-70">
+        <nav id="mobile-navbar" class="hidden absolute top-12 right-6 bg-black bg-opacity-80 text-white rounded-lg p-4 z-40 flex flex-col space-y-3">
+            <ul class="flex flex-row space-x-5 p-5 bg-black bg-opacity-70">
                 <li><a class="text-white hover:text-pink-300" href="#qui-sommes-nous">Qui sommes nous</a></li>
                 <li><a class="text-white hover:text-pink-300" href="#nos-services">Nos services</a></li>
                 <li><a class="text-white hover:text-pink-300" href="#nous-contacter">Nous contacter</a></li>
@@ -52,7 +52,7 @@
       <!-- Bouton Voir Plus -->
       <button id="see-more-button" 
       class="absolute bottom-10 left-1/2 transform -translate-x-1/2  z-50">
-      <img src="images/telecommande.png" class="w-20 h-20">
+      <img src="images/telecommande1.png" class="w-20 h-20">
       </button>
     </div>
     
