@@ -52,24 +52,43 @@ scene.add(hemiLight);
 
 // Charger le modèle GLB (TV)
 const loader = new THREE.GLTFLoader();
-let asteroid = null;
+let tv = null;
 
 loader.load(
     'assets/scène.3D/grandmas_tv.glb',
     function (gltf) {
-        asteroid = gltf.scene;
-        scene.add(asteroid);
-        asteroid.scale.set(0.2, 0.2, 0.2);
-        asteroid.position.set(0, 8, 0);
+        tv = gltf.scene;
+        scene.add(tv);
+        tv.scale.set(0.25, 0.25, 0.25);
+        tv.position.set(0, 6, 0);
 
-        const boundingBox = new THREE.Box3().setFromObject(asteroid);
+        const boundingBox = new THREE.Box3().setFromObject(tv);
         const size = boundingBox.getSize(new THREE.Vector3());
         const maxDimension = Math.max(size.x, size.y, size.z);
 
         if (maxDimension > 1) {
             const scale = 1 / maxDimension;
-            asteroid.scale.set(scale, scale, scale);
+            tv.scale.set(scale, scale, scale);
         }
+
+        function updateAsteroidScale() {
+            if (tv) {
+                if (window.innerWidth < 768) {
+                    tv.scale.set(0.15, 0.15, 0.15);
+                } else {
+                    tv.scale.set(0.25, 0.25, 0.25);
+                }
+                renderer.render(scene, camera); // Forcer le rendu si nécessaire
+            }
+        }
+
+        // Appeler immédiatement après le chargement pour ajuster la télé
+        updateAsteroidScale();
+
+
+        // Détecter les changements de taille d'écran
+        window.addEventListener('resize', updateAsteroidScale,);
+        
 
         camera.position.z = Math.min(maxDimension * 1.5, 4.5);
         const center = boundingBox.getCenter(new THREE.Vector3());
@@ -115,6 +134,49 @@ function toggleSections() {
     }
 }
 
+// Gestion du menu hamburger
+const menuToggle = document.getElementById("menu-toggle");
+const mobileNavbar = document.getElementById("mobile-navbar");
+const body = document.body
+
+// Bloquer/débloquer le scroll
+function toggleScroll() {
+    body.classList.toggle('no-scroll');
+    if (body.classList.contains('no-scroll')) {
+        window.addEventListener('touchmove', preventScroll, { passive: false });
+    } else {
+        window.removeEventListener('touchmove', preventScroll, { passive: false });
+    }
+}
+
+// Empêcher les gestes tactiles
+function preventScroll(event) {
+    event.preventDefault();
+}
+
+
+menuToggle.addEventListener("click", () => {
+    mobileNavbar.classList.toggle("hidden");
+
+    // Si le menu est visible, on bloque le scroll, sinon on le débloque
+    if (!mobileNavbar.classList.contains("hidden")) {
+        toggleScroll(); // Bloque le scroll
+    } else {
+        toggleScroll(); // Débloque le scroll
+    }
+
+    if (!mobileNavbar.classList.contains("hidden") && !sectionsVisible) {
+         // Affiche les sections sans scroll automatique
+    
+    footer.classList.remove("hidden");
+    contentSections.classList.remove("hidden");
+    container.classList.add("h-3/4");
+    //seeMoreButton.textContent = 'Voir moins ↑';
+    }
+
+
+});
+
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
@@ -126,12 +188,12 @@ container.addEventListener('mousedown', (event) => {
 });
 
 container.addEventListener('mousemove', (event) => {
-    if (isDragging && asteroid) { // Assurez-vous que l'objet est chargé
+    if (isDragging && tv) { // Assurez-vous que l'objet est chargé
         const deltaX = event.clientX - previousMousePosition.x;
         const deltaY = event.clientY - previousMousePosition.y;
 
-        asteroid.rotation.y += deltaX * 0.005; // Ajustez la vitesse de rotation
-        asteroid.rotation.x += deltaY * 0.005;
+        tv.rotation.y += deltaX * 0.005; // Ajustez la vitesse de rotation
+        tv.rotation.x += deltaY * 0.005;
 
         previousMousePosition.x = event.clientX;
         previousMousePosition.y = event.clientY;
@@ -177,9 +239,9 @@ function onMouseClick(event) {
 }
 
 
-scene.children.forEach(obj => {
-    console.log(obj.name, obj.type, obj.isMesh ? 'Testable' : 'Non-testable');
-});
+//scene.children.forEach(obj => {
+    //console.log(obj.name, obj.type, obj.isMesh ? 'Testable' : 'Non-testable');
+//});
 
 
 window.addEventListener('click', onMouseClick, false);
@@ -236,20 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Timeline pour les animations (peut être étendue si nécessaire)
     const timeline = gsap.timeline();
 
-    // Gestion du menu hamburger
-    const menuToggle = document.getElementById("menu-toggle");
-    const mobileNavbar = document.getElementById("mobile-navbar");
-
-    menuToggle.addEventListener("click", () => {
-        mobileNavbar.classList.toggle("hidden");
-        if (!mobileNavbar.classList.contains("hidden") && !sectionsVisible) {
-             // Affiche les sections sans scroll automatique
-        footer.classList.remove("hidden");
-        contentSections.classList.remove("hidden");
-        container.classList.add("h-3/4");
-        //seeMoreButton.textContent = 'Voir moins ↑';
-        }
-    });
+    
 
     // Animation pour les sous-services
     const services = document.querySelectorAll('.service');

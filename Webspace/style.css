@@ -98,7 +98,7 @@ header {
 /* Media query pour les très petits écrans (max-width: 480px) */
 @media (max-width: 480px) {
     #mobile-navbar {
-        width: 90%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
+        width: 50%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
         top: 50px; /* Ajuster la position pour bien aligner le navbar avec le menu */
     }
 
