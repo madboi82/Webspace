@@ -68,19 +68,24 @@ header {
         flex-direction: column;
         align-items: center; /* Centrer les éléments */
         padding: 20px; /* Augmenter l'espacement interne pour aérer le contenu */
-        top: 60px; /* Aligner avec le bouton du menu */
+        top: 30px; /* Aligner avec le bouton du menu */
         right: 10px;
-        width: 80%; /* Réduire la largeur pour plus d'espace */
+        width: 60%; /* Réduire la largeur pour plus d'espace */
+        
+        
     }
 
     #mobile-navbar ul {
         flex-direction: column; /* Organiser les éléments du menu en colonne */
         padding: 0; /* Retirer le padding inutile */
         width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
+        
     }
 
     #mobile-navbar ul li {
         margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
+        padding: 0 ;
+        font-size: 0.5rem;
     }
 
     #menu-toggle {
@@ -98,12 +103,12 @@ header {
 /* Media query pour les très petits écrans (max-width: 480px) */
 @media (max-width: 480px) {
     #mobile-navbar {
-        width: 50%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
-        top: 50px; /* Ajuster la position pour bien aligner le navbar avec le menu */
+        width: 40%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
+        top: 40px; /* Ajuster la position pour bien aligner le navbar avec le menu */
     }
 
     #mobile-navbar ul li {
-        font-size: 1rem; /* Réduire la taille de la police des éléments de menu */
+        font-size: 0.5rem; /* Réduire la taille de la police des éléments de menu */
         text-align: center; /* Centrer les éléments */
     }
 
@@ -119,6 +124,35 @@ header {
     }
 }
 
+@media (max-width: 1024px) {
+
+    #mobile-navbar{
+        top: 30px;
+        width: 40%;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        right: 10px;
+
+
+    }
+
+    #mobile-navbar ul {
+        flex-direction: column; /* Organiser les éléments du menu en colonne */
+        padding: 0; /* Retirer le padding inutile */
+        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
+        
+    }
+
+    #mobile-navbar ul li {
+        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
+        font-size: 0.5rem;
+        margin-left: 10px;
+        
+    }
+
+    
+}
 
 
 

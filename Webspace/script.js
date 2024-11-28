@@ -20,8 +20,14 @@ video.autoplay = true;
 video.play().catch(() => {
     console.log('Lecture automatique bloquée. En attente d’une interaction utilisateur.');
     window.addEventListener('click', () => {
+
         video.play().catch((error) => console.error('Erreur lecture vidéo:', error));
+    
     });
+
+    
+        
+    
 });
 
 // Création texture vidéo
@@ -108,6 +114,8 @@ loader.load(
 
 
 
+
+
 // Fonction pour afficher/masquer les sections
 let sectionsVisible = false;
 const contentSections = document.getElementById('content-sections');
@@ -158,20 +166,17 @@ function preventScroll(event) {
 menuToggle.addEventListener("click", () => {
     mobileNavbar.classList.toggle("hidden");
 
-    // Si le menu est visible, on bloque le scroll, sinon on le débloque
-    if (!mobileNavbar.classList.contains("hidden")) {
-        toggleScroll(); // Bloque le scroll
-    } else {
-        toggleScroll(); // Débloque le scroll
-    }
-
-    if (!mobileNavbar.classList.contains("hidden") && !sectionsVisible) {
+        
+        if (!mobileNavbar.classList.contains("hidden") && !sectionsVisible) {
          // Affiche les sections sans scroll automatique
     
     footer.classList.remove("hidden");
     contentSections.classList.remove("hidden");
     container.classList.add("h-3/4");
     //seeMoreButton.textContent = 'Voir moins ↑';
+    }else{
+        footer.classList.add("hidden");
+        contentSections.classList.add("hidden");
     }
 
 
