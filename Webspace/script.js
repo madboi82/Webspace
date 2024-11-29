@@ -61,12 +61,16 @@ const loader = new THREE.GLTFLoader();
 let tv = null;
 
 loader.load(
-    'assets/scène.3D/grandmas_tv.glb',
+    'assets/scène.3D/tv_old_asset.glb',
     function (gltf) {
         tv = gltf.scene;
         scene.add(tv);
-        tv.scale.set(0.25, 0.25, 0.25);
-        tv.position.set(0, 6, 0);
+        tv.scale.set(0, 0, 0);
+        tv.position.set(0, 0.4, 0);
+        tv.rotation.set(-Math.PI / -2, 0, 0); // Corrige l'orientation en inclinant de 90° sur X
+
+        
+        
 
         const boundingBox = new THREE.Box3().setFromObject(tv);
         const size = boundingBox.getSize(new THREE.Vector3());
@@ -87,6 +91,10 @@ loader.load(
                 renderer.render(scene, camera); // Forcer le rendu si nécessaire
             }
         }
+
+
+        //Générer un text qui défile pour l'écran 
+        //document.getElementById("container");
 
         // Appeler immédiatement après le chargement pour ajuster la télé
         updateAsteroidScale();
