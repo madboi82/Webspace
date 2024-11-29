@@ -24,9 +24,7 @@ video.play().catch(() => {
         video.play().catch((error) => console.error('Erreur lecture vidéo:', error));
     
     });
-
-    
-        
+  
     
 });
 
@@ -92,10 +90,6 @@ loader.load(
             }
         }
 
-
-        //Générer un text qui défile pour l'écran 
-        //document.getElementById("container");
-
         // Appeler immédiatement après le chargement pour ajuster la télé
         updateAsteroidScale();
 
@@ -129,7 +123,7 @@ let sectionsVisible = false;
 const contentSections = document.getElementById('content-sections');
 const footer = document.getElementById('footer');
 const quiSommesNousSection = document.getElementById('qui-sommes-nous');
-const seeMoreButton = document.getElementById('see-more-button'); // Assure que le bouton est déjà dans le DOM
+
 
 function toggleSections() {
     sectionsVisible = !sectionsVisible;
@@ -138,7 +132,7 @@ function toggleSections() {
         footer.classList.remove('hidden');
         contentSections.classList.remove('hidden');
         container.classList.add('h-3/4');
-        //seeMoreButton.textContent = 'Voir moins ↑';
+        
 
         quiSommesNousSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
@@ -146,7 +140,7 @@ function toggleSections() {
         contentSections.classList.add('hidden');
         container.classList.remove('h-3/4');
         container.classList.add('h-screen');
-        //seeMoreButton.textContent = 'Voir plus ↓';
+        
     }
 }
 
@@ -164,6 +158,49 @@ function toggleScroll() {
         window.removeEventListener('touchmove', preventScroll, { passive: false });
     }
 }
+
+const textScroll = document.getElementById("welcome");
+const welcomeTitle = document.getElementById("welcome-title")
+const welcomeText = document.getElementById("welcome-text")
+const wlecomeQuote = document.getElementById("welcome-quote")
+const seeMoreButton = document.getElementById('see-more-button'); 
+
+
+
+
+
+// Ajout de l'événement au clic sur le bouton
+seeMoreButton.addEventListener("click", () => {
+    textScroll.classList.toggle("hidden");
+
+    
+
+    if(!textScroll.classList.contains("hidden")){
+        // Animation d'apparition
+        setTimeout(() => {
+            welcomeTitle.classList.remove("opacity-0", "translate-y-10");
+            welcomeText.classList.remove("opacity-0", "translate-y-10");
+            wlecomeQuote.classList.remove("opacity-0", "translate-y-10");
+        }, 100); // Le délai permet d'attendre un peu avant de lancer l'animation
+    }
+    
+
+    // Calculer la position du texte en fonction de la taille de l'écran
+    if (!textScroll.classList.contains("hidden")) {
+        if (window.innerWidth < 768) {
+            // Sur mobile : place le texte un peu plus bas
+            textScroll.style.top = "50%";
+        } else {
+            // Sur bureau : place le texte un peu plus haut
+            textScroll.style.top = "30%";
+        }
+    }
+});
+
+
+
+
+
 
 // Empêcher les gestes tactiles
 function preventScroll(event) {
@@ -218,8 +255,7 @@ container.addEventListener('mouseup', () => {
 });
 
 
-// Gérer l'événement pour le bouton "Voir plus"
-seeMoreButton.addEventListener('click', toggleSections);
+
 
 function onMouseClick(event) {
     const mouse = new THREE.Vector2();

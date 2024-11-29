@@ -61,6 +61,10 @@ header {
     overflow: hidden;
 }
 
+
+
+
+
 /* Media query pour les petits écrans */
 @media (max-width: 768px) {
     #mobile-navbar {
