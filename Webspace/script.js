@@ -64,7 +64,7 @@ loader.load(
         tv = gltf.scene;
         scene.add(tv);
         tv.scale.set(0, 0, 0);
-        tv.position.set(0, 0.4, 0);
+        tv.position.set(0, 0.3, 0);
         tv.rotation.set(-Math.PI / -2, 0, 0); // Corrige l'orientation en inclinant de 90° sur X
 
         
@@ -166,11 +166,17 @@ const wlecomeQuote = document.getElementById("welcome-quote")
 const seeMoreButton = document.getElementById('see-more-button'); 
 
 
+function rotationTV (){
+
+    if(!tv.rotation.set(-Math.PI / -2, 0, 0)){
+        textScroll.classList.add("hidden")
+    }
+    rotationTV();
+}
 
 
-
-// Ajout de l'événement au clic sur le bouton
-seeMoreButton.addEventListener("click", () => {
+   // Ajout de l'événement au clic sur le bouton
+   seeMoreButton.addEventListener("click", () => {
     textScroll.classList.toggle("hidden");
 
     
@@ -181,8 +187,12 @@ seeMoreButton.addEventListener("click", () => {
             welcomeTitle.classList.remove("opacity-0", "translate-y-10");
             welcomeText.classList.remove("opacity-0", "translate-y-10");
             wlecomeQuote.classList.remove("opacity-0", "translate-y-10");
+
+            
         }, 100); // Le délai permet d'attendre un peu avant de lancer l'animation
     }
+
+    
     
 
     // Calculer la position du texte en fonction de la taille de l'écran
@@ -192,7 +202,7 @@ seeMoreButton.addEventListener("click", () => {
             textScroll.style.top = "50%";
         } else {
             // Sur bureau : place le texte un peu plus haut
-            textScroll.style.top = "30%";
+            textScroll.style.top = "40%";
         }
     }
 });
