@@ -61,9 +61,63 @@ header {
     overflow: hidden;
 }
 
-#welcome{
+#welcome {
+    margin-top: -50px;
     margin-left: 42%;
-    margin-top: -40px;   
+    font-size: 80%;
+    width: 17%;
+    
+}
+
+
+@media (max-width: 375px) {
+    #welcome {
+        margin-top: 160px;
+        margin-left: 25%;
+        font-size: 20%;
+        width: 40%;
+    }
+}
+
+
+
+
+
+/* Media query pour les très petits écrans (max-width: 480px) */
+@media (max-width: 480px) {
+
+
+    
+
+    .background-image{
+        top: -5vh;  
+    }
+
+    
+
+    #mobile-navbar {
+        width: 40%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
+        top: 40px; /* Ajuster la position pour bien aligner le navbar avec le menu */
+    }
+
+    #mobile-navbar ul li {
+        font-size: 0.5rem; /* Réduire la taille de la police des éléments de menu */
+        text-align: center; /* Centrer les éléments */
+    }
+
+    /* Ajustement pour améliorer l'apparence générale */
+    #menu-toggle {
+        top: 10px;
+        right: 15px;
+    }
+
+    /* Redimensionner le logo encore plus petit */
+    #logo {
+        height: 35px;
+    }
+
+    
+
     
 }
 
@@ -71,11 +125,17 @@ header {
 
 
 
-
-
-
 /* Media query pour les petits écrans */
 @media (max-width: 768px) {
+
+    #welcome {
+        margin-top: 100px;
+        margin-left: 30%;
+        font-size: 150%;
+        width: 40%;
+        
+    }
+
     #mobile-navbar {
         /* Passer à une disposition verticale pour les petits écrans */
         flex-direction: column;
@@ -112,41 +172,29 @@ header {
         height: 40px; /* Taille plus petite pour s'adapter à l'écran */
     }
 
-    #welcome{
-        margin-top: -60px;
-        margin-left: 40%;
-        font-size: 8px;
-        width: 22%;
-    }
-}
-
-/* Media query pour les très petits écrans (max-width: 480px) */
-@media (max-width: 480px) {
-    #mobile-navbar {
-        width: 40%; /* Augmenter légèrement la largeur du navbar pour plus de confort */
-        top: 40px; /* Ajuster la position pour bien aligner le navbar avec le menu */
-    }
-
-    #mobile-navbar ul li {
-        font-size: 0.5rem; /* Réduire la taille de la police des éléments de menu */
-        text-align: center; /* Centrer les éléments */
-    }
-
-    /* Ajustement pour améliorer l'apparence générale */
-    #menu-toggle {
-        top: 10px;
-        right: 15px;
-    }
-
-    /* Redimensionner le logo encore plus petit */
-    #logo {
-        height: 35px;
-    }
-
     
+
+    .background-image{
+        top: 40%;
+    }
 }
+
+
+
+
+
+
+
 
 @media (max-width: 1024px) {
+
+    #welcome {
+        margin-top: 200px;
+        margin-left: 30%;
+        font-size: 100%;
+        width: 40%;
+        
+    }
 
     #mobile-navbar{
         top: 30px;
@@ -173,12 +221,7 @@ header {
         
     }
 
-    #welcome{
-        margin-top: -60px;
-        margin-left: 40%;
-        font-size: 12px;
-        width: 19%;
-    }
+   
 }
 
 
@@ -224,21 +267,9 @@ header {
 }
 
 
-@media (max-width: 480px){
-    .background-image{
-        top: -5vh;
-        
-        
-        
-    }
 
-}
 
-@media (max-width: 768px){
-    .background-image{
-        top: 40%;
-    }
-}
+
 
 @media (max-width: 1978px){
     .background-image{
@@ -251,4 +282,6 @@ header {
     .background-image{
         top: -8vh;
     }
+
+    
 }

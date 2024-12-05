@@ -186,16 +186,7 @@ const seeMoreButton = document.getElementById('see-more-button');
         }, 100); // Le délai permet d'attendre un peu avant de lancer l'animation
     }
 
-    // Calculer la position du texte en fonction de la taille de l'écran
-    if (!textScroll.classList.contains("hidden")) {
-        if (window.innerWidth < 768) {
-            // Sur mobile : place le texte un peu plus bas
-            textScroll.style.top = "100%";
-        } else {
-            // Sur bureau : place le texte un peu plus haut
-            textScroll.style.top = "40%";
-        }
-    }
+    
 
     
 
