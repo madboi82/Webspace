@@ -171,11 +171,13 @@ const seeMoreButton = document.getElementById('see-more-button');
 
    // Ajout de l'événement au clic sur le bouton
    seeMoreButton.addEventListener("click", () => {
+    
+    if(tvInInitialPosition){
     textScroll.classList.toggle("hidden");
 
     
 
-    if(!textScroll.classList.contains("hidden")){
+    if(!textScroll.classList.contains("hidden") ){
         // Animation d'apparition
         setTimeout(() => {
             welcomeTitle.classList.remove("opacity-0", "translate-y-10");
@@ -184,13 +186,12 @@ const seeMoreButton = document.getElementById('see-more-button');
 
             
         }, 100); // Le délai permet d'attendre un peu avant de lancer l'animation
+      }
+    }else{
+        console.log("La télé n'est pas dans sa position initiale.");
     }
 
-    
-
-    
-
-});
+    });
 
 
 
@@ -229,10 +230,33 @@ let previousMousePosition = { x: 0, y: 0 };
 const initialRotation = { x: -Math.PI / -2, y: 0, z: 0 };
 const initialPosition = { x: 0, y: 0.3, z: 0 };
 
+const epsilon = 0.1; // Tolérance pour comparer les rotations
+const epsilonPosition = 0.1; // Tolérance pour comparer la position
+
+// Fonction pour forcer la télé à la position initiale si elle est proche
+function snapToInitialPosition(tv) {
+    if (tv) {
+        const isCloseToInitialPosition =
+            Math.abs(tv.position.x - initialPosition.x) < epsilonPosition &&
+            Math.abs(tv.position.y - initialPosition.y) < epsilonPosition &&
+            Math.abs(tv.position.z - initialPosition.z) < epsilonPosition;
+        
+        const isCloseToInitialRotation =
+            Math.abs(tv.rotation.x - initialRotation.x) < epsilon &&
+            Math.abs(tv.rotation.y - initialRotation.y) < epsilon &&
+            Math.abs(tv.rotation.z - initialRotation.z) < epsilon;
+
+        if (isCloseToInitialPosition && isCloseToInitialRotation) {
+            // Forcer la position et la rotation initiale
+            tv.position.set(initialPosition.x, initialPosition.y, initialPosition.z);
+            tv.rotation.set(initialRotation.x, initialRotation.y, initialRotation.z);
+        }
+    }
+}
+
 // Fonction pour vérifier si la télé est en position initiale
 function isInInitialPosition(tv) {
-    const epsilon = 0.05; // Tolérance pour comparer les rotations
-    const epsilonPosition = 0.05; // Tolérance pour comparer la position
+    
     return (
         Math.abs(tv.position.x - initialPosition.x) < epsilonPosition &&
         Math.abs(tv.position.y - initialPosition.y) < epsilonPosition &&
@@ -258,6 +282,15 @@ container.addEventListener('mousedown', (event) => {
     }
 });
 
+let tvInInitialPosition = true;
+
+function updateTvPositionState() {
+    tvInInitialPosition = tv && isInInitialPosition(tv);
+    if (tvInInitialPosition) {
+        snapToInitialPosition(tv); // Force la télé à revenir à la position initiale si elle est proche
+    }
+}
+
 container.addEventListener('mousemove', (event) => {
     if (isDragging && tv) { // Assurez-vous que l'objet est chargé
         const deltaX = event.clientX - previousMousePosition.x;
@@ -269,7 +302,9 @@ container.addEventListener('mousemove', (event) => {
         previousMousePosition.x = event.clientX;
         previousMousePosition.y = event.clientY;
 
-        if (tv && isInInitialPosition(tv)) {
+        updateTvPositionState();
+
+        if (tvInInitialPosition) {
             // Réaffiche le texte seulement si la télé est à la position initiale
             textScroll.classList.remove("hidden");
         } else {
@@ -282,7 +317,10 @@ container.addEventListener('mousemove', (event) => {
 container.addEventListener('mouseup', () => {
     isDragging = false;
 
-    
+    // Vérifie si la télé est proche de sa position initiale après un drag
+    if (tv) {
+        snapToInitialPosition(tv);
+    }
         
     
 });
