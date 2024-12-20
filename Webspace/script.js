@@ -54,12 +54,16 @@ scene.add(pointLight);
 const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 scene.add(hemiLight);
 
+// Variables pour animation
+let mixer = null;
+let clock = new THREE.Clock();
+
 // Charger le modèle GLB (TV)
 const loader = new THREE.GLTFLoader();
 let tv = null;
 
 loader.load(
-    'assets/scène.3D/tv_old_asset.glb',
+    'assets/scène.3D/old_tv.glb',
     function (gltf) {
         tv = gltf.scene;
         scene.add(tv);
@@ -77,6 +81,14 @@ loader.load(
         if (maxDimension > 1) {
             const scale = 1 / maxDimension;
             tv.scale.set(scale, scale, scale);
+        }
+
+        // Configurer le mixer pour les animations
+        if (gltf.animations.length > 0) {
+            mixer = new THREE.AnimationMixer(tv);
+            gltf.animations.forEach((clip) => {
+                mixer.clipAction(clip).play();
+            });
         }
 
         function updateAsteroidScale() {
@@ -159,43 +171,6 @@ function toggleScroll() {
     }
 }
 
-const textScroll = document.getElementById("welcome");
-const welcomeTitle = document.getElementById("welcome-title")
-const welcomeText = document.getElementById("welcome-text")
-const wlecomeQuote = document.getElementById("welcome-quote")
-const seeMoreButton = document.getElementById('see-more-button'); 
-
-
-
-
-
-   // Ajout de l'événement au clic sur le bouton
-   seeMoreButton.addEventListener("click", () => {
-    
-    if(tvInInitialPosition){
-    textScroll.classList.toggle("hidden");
-
-    
-
-    if(!textScroll.classList.contains("hidden") ){
-        // Animation d'apparition
-        setTimeout(() => {
-            welcomeTitle.classList.remove("opacity-0", "translate-y-10");
-            welcomeText.classList.remove("opacity-0", "translate-y-10");
-            wlecomeQuote.classList.remove("opacity-0", "translate-y-10");
-
-            
-        }, 100); // Le délai permet d'attendre un peu avant de lancer l'animation
-      }
-    }else{
-        console.log("La télé n'est pas dans sa position initiale.");
-    }
-
-    });
-
-
-
-
 
 
 // Empêcher les gestes tactiles
@@ -226,46 +201,6 @@ menuToggle.addEventListener("click", () => {
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
-// Position initiale et rotation définie
-const initialRotation = { x: -Math.PI / -2, y: 0, z: 0 };
-const initialPosition = { x: 0, y: 0.3, z: 0 };
-
-const epsilon = 0.1; // Tolérance pour comparer les rotations
-const epsilonPosition = 0.1; // Tolérance pour comparer la position
-
-// Fonction pour forcer la télé à la position initiale si elle est proche
-function snapToInitialPosition(tv) {
-    if (tv) {
-        const isCloseToInitialPosition =
-            Math.abs(tv.position.x - initialPosition.x) < epsilonPosition &&
-            Math.abs(tv.position.y - initialPosition.y) < epsilonPosition &&
-            Math.abs(tv.position.z - initialPosition.z) < epsilonPosition;
-        
-        const isCloseToInitialRotation =
-            Math.abs(tv.rotation.x - initialRotation.x) < epsilon &&
-            Math.abs(tv.rotation.y - initialRotation.y) < epsilon &&
-            Math.abs(tv.rotation.z - initialRotation.z) < epsilon;
-
-        if (isCloseToInitialPosition && isCloseToInitialRotation) {
-            // Forcer la position et la rotation initiale
-            tv.position.set(initialPosition.x, initialPosition.y, initialPosition.z);
-            tv.rotation.set(initialRotation.x, initialRotation.y, initialRotation.z);
-        }
-    }
-}
-
-// Fonction pour vérifier si la télé est en position initiale
-function isInInitialPosition(tv) {
-    
-    return (
-        Math.abs(tv.position.x - initialPosition.x) < epsilonPosition &&
-        Math.abs(tv.position.y - initialPosition.y) < epsilonPosition &&
-        Math.abs(tv.position.z - initialPosition.z) < epsilonPosition &&
-        Math.abs(tv.rotation.x - initialRotation.x) < epsilon &&
-        Math.abs(tv.rotation.y - initialRotation.y) < epsilon &&
-        Math.abs(tv.rotation.z - initialRotation.z) < epsilon
-    );
-}
 
 
 
@@ -275,21 +210,10 @@ container.addEventListener('mousedown', (event) => {
     previousMousePosition.x = event.clientX;
     previousMousePosition.y = event.clientY;
 
-    // Ne masquer le texte que si la souris commence à déplacer la télé
-    if (tv && !isInInitialPosition(tv) && !textScroll.classList.contains("hidden")) {
-        textScroll.classList.add("hidden");
-   
-    }
+    
 });
 
-let tvInInitialPosition = true;
 
-function updateTvPositionState() {
-    tvInInitialPosition = tv && isInInitialPosition(tv);
-    if (tvInInitialPosition) {
-        snapToInitialPosition(tv); // Force la télé à revenir à la position initiale si elle est proche
-    }
-}
 
 container.addEventListener('mousemove', (event) => {
     if (isDragging && tv) { // Assurez-vous que l'objet est chargé
@@ -302,25 +226,12 @@ container.addEventListener('mousemove', (event) => {
         previousMousePosition.x = event.clientX;
         previousMousePosition.y = event.clientY;
 
-        updateTvPositionState();
-
-        if (tvInInitialPosition) {
-            // Réaffiche le texte seulement si la télé est à la position initiale
-            textScroll.classList.remove("hidden");
-        } else {
-            textScroll.classList.add("hidden");
-        }
     }
     
 });
 
 container.addEventListener('mouseup', () => {
     isDragging = false;
-
-    // Vérifie si la télé est proche de sa position initiale après un drag
-    if (tv) {
-        snapToInitialPosition(tv);
-    }
         
     
 });
@@ -391,7 +302,15 @@ resizeRenderer();
 // Boucle d'animation
 function animate() {
     requestAnimationFrame(animate);
+
+    // Mettre à jour le mixer pour les animations
+    if (mixer) {
+        const delta = clock.getDelta();
+        mixer.update(delta);
+    }
+
     renderer.render(scene, camera);
+
 }
 animate();
 
