@@ -17,16 +17,69 @@ video.muted = true;
 video.autoplay = true;
 
 // Lecture forcée après interaction utilisateur
-video.play().catch(() => {
-    console.log('Lecture automatique bloquée. En attente d’une interaction utilisateur.');
-    window.addEventListener('click', () => {
-
-        video.play().catch((error) => console.error('Erreur lecture vidéo:', error));
-    
+function tryToPlayVideo() {
+    video.play().catch(() => {
+        console.log('Lecture automatique bloquée. En attente d’une interaction utilisateur.');
+        // Attendre que l'utilisateur clique quelque part pour jouer la vidéo
+        window.addEventListener('click', () => {
+            video.play().catch((error) => console.error('Erreur lecture vidéo:', error));
+        });
     });
-  
-    
+}
+
+// Appeler la fonction dès que la page est prête
+tryToPlayVideo();
+
+// Gérer l'interaction du bouton "see-more-button"
+const seeMoreButton = document.getElementById('see-more-button');
+
+let isPaused = false;  // Variable pour suivre l'état (pause ou non)
+
+// Ajouter un événement au bouton
+seeMoreButton.addEventListener('click', () => {
+    // Si la vidéo est en cours de lecture, on l'arrête (met en pause)
+    if (!video.paused) {
+        console.log("Vidéo stoppée");
+        video.pause(); // Met la vidéo en pause si elle est en cours de lecture
+    } else {
+        // Relancer la vidéo si elle est en pause
+        console.log("Vidéo relancée");
+        video.play(); // Reprend la vidéo si elle est en pause
+    }
+
+    // Gérer l'animation 3D de la télévision
+    if (mixer) {
+        // Vérifiez si des animations existent dans mixer.clipActions
+        const hasAnimations = mixer.clipActions && mixer.clipActions.length > 0;
+
+        if (hasAnimations) {
+            if (isPaused) {
+                // Relancer toutes les animations si elles étaient arrêtées
+                console.log("Relancer les animations 3D");
+                mixer.clipActions.forEach(action => {
+                    action.play(); // Relancer toutes les animations
+                });
+                isPaused = false; // Modifier l'état à "relancé"
+                seeMoreButton.textContent = 'Voir moins ↑'; // Texte du bouton
+            } else {
+                // Arrêter toutes les animations si elles étaient en cours
+                console.log("Arrêter les animations 3D");
+                mixer.stopAllAction(); // Arrêter toutes les animations
+                isPaused = true; // Modifier l'état à "arrêté"
+                seeMoreButton.textContent = 'Voir plus ↓'; // Texte du bouton
+            }
+        } else {
+            console.log("Aucune animation disponible pour la télévision");
+        }
+    } else {
+        console.log("Mixer non disponible");
+    }
 });
+
+
+
+
+
 
 // Création texture vidéo
 const videoTexture = new THREE.VideoTexture(video);
@@ -322,16 +375,29 @@ animate();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Animation GSAP pour le logo
-    gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, duration: 1.5 });
 
-    // Animation de rebond pour le logo
+    // Ajouter un délai d'attente pour donner le temps à l'élément de se rendre dans le DOM
+    gsap.set("#logo", {
+        scale: 1, // Assure-toi que le logo a une taille correcte
+        transformOrigin: "center", // Centre la rotation
+        opacity: 1
+    });
+
+    // Animation GSAP pour le logo
+    gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, opacity:1, duration: 1.5, ease:"power2.out" });
+
+    // Animation GSAP pour le logo : vague fluide de gauche à droite
     gsap.to("#logo", {
-        y: -20,
-        duration: 0.8,
-        ease: "bounce.out",
-        repeat: -1,
-        yoyo: true
+        x: 5, // Déplacement horizontal
+        y: 2, // Déplacement vertical
+        duration: 2,
+        repeat: -1, // Répétition infinie
+        yoyo: true, // Effet aller-retour
+        ease: "sine.inOut", // Easing pour un mouvement fluide
+        stagger: {
+            amount: 0.5, // Ajoute un léger décalage pour une sensation de mouvement fluide
+            from: "start", // Le décalage commence du côté gauche
+        }
     });
 
     // Timeline pour les animations (peut être étendue si nécessaire)
