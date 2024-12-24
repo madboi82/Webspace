@@ -22,6 +22,17 @@ header {
     background: transparent; /* Rend le header transparent par défaut */
 }
 
+#logo h2 {
+    margin-bottom: 0; /* Supprime la marge inférieure de h2 */
+    line-height: 1.2; /* Ajuste la hauteur de ligne pour h2 */
+}
+
+#logo p {
+    margin-top: 0; /* Supprime la marge supérieure de p */
+    line-height: 1.2; /* Ajuste la hauteur de ligne pour p */
+}
+
+
 #mobile-navbar {
     transition: all 0.3s ease; /* Animation d'ouverture/fermeture */
 }
