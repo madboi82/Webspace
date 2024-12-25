@@ -5,11 +5,11 @@ html, body{
 
 body {
     background: linear-gradient(to right, #1b1f35, #7b2cbf, #d5006d);
-    cursor: url('images/icons8-rocket-48.png'), auto; 
+    cursor: url('images/souris.png'), auto; 
 }
 
 a, button, #scrollToTop {
-    cursor: url('images/icons8-rocket-30.png'), auto;
+    cursor: url('images/main_2.png'), auto;
     transition: opacity 0.3s ease;
 }
 

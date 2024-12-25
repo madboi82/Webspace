@@ -33,7 +33,7 @@ tryToPlayVideo();
 // Gérer l'interaction du bouton "see-more-button"
 const seeMoreButton = document.getElementById('see-more-button');
 
-let isPaused = false;  // Variable pour suivre l'état (pause ou non)
+let isPaused = false; // Variable pour suivre l'état (pause ou non)
 
 // Ajouter un événement au bouton
 seeMoreButton.addEventListener('click', () => {
@@ -49,32 +49,24 @@ seeMoreButton.addEventListener('click', () => {
 
     // Gérer l'animation 3D de la télévision
     if (mixer) {
-        // Vérifiez si des animations existent dans mixer.clipActions
-        const hasAnimations = mixer.clipActions && mixer.clipActions.length > 0;
-
-        if (hasAnimations) {
-            if (isPaused) {
-                // Relancer toutes les animations si elles étaient arrêtées
-                console.log("Relancer les animations 3D");
-                mixer.clipActions.forEach(action => {
-                    action.play(); // Relancer toutes les animations
-                });
-                isPaused = false; // Modifier l'état à "relancé"
-                seeMoreButton.textContent = 'Voir moins ↑'; // Texte du bouton
-            } else {
-                // Arrêter toutes les animations si elles étaient en cours
-                console.log("Arrêter les animations 3D");
-                mixer.stopAllAction(); // Arrêter toutes les animations
-                isPaused = true; // Modifier l'état à "arrêté"
-                seeMoreButton.textContent = 'Voir plus ↓'; // Texte du bouton
-            }
+        if (isPaused) {
+            // Relancer toutes les animations si elles étaient arrêtées
+            console.log("Relancer les animations 3D");
+            mixer.timeScale = 1; // Reprendre la lecture des animations
+            isPaused = false;
+            
         } else {
-            console.log("Aucune animation disponible pour la télévision");
+            // Arrêter toutes les animations si elles étaient en cours
+            console.log("Arrêter les animations 3D");
+            mixer.timeScale = 0; // Mettre les animations en pause
+            isPaused = true;
+            
         }
     } else {
         console.log("Mixer non disponible");
     }
 });
+
 
 
 
