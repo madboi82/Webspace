@@ -192,6 +192,9 @@ function toggleSections() {
         
 
         quiSommesNousSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+         // Déclencher les animations après que les sections sont visibles
+         initSectionAnimations();
     } else {
         footer.classList.add('hidden');
         contentSections.classList.add('hidden');
@@ -200,6 +203,8 @@ function toggleSections() {
         
     }
 }
+
+
 
 // Gestion du menu hamburger
 const menuToggle = document.getElementById("menu-toggle");
@@ -395,10 +400,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Timeline pour les animations (peut être étendue si nécessaire)
     const timeline = gsap.timeline();
 
-    
 
     // Animation pour les sous-services
     const services = document.querySelectorAll('.service');
+
+    
+
 
     services.forEach(service => {
         service.addEventListener('mouseover', () => {
@@ -433,6 +440,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#nous-contacter form');
     const confirmationMessage = document.getElementById('confirmation-message');
     const paperPlane = document.getElementById('paper-plane');
+
+    
 
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // Empêche l'envoi réel du formulaire

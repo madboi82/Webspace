@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
 
     <link href="style.css" rel="stylesheet">
 
@@ -24,8 +26,11 @@
     <div class="relative h-screen w-full overflow-hidden" id="scene-container">
     <header class="flex justify-between items-center p-5">
         <div class="text-2xl font-bold text-white " id="logo">
-            <a href=""> <h2 class=" mb-0 leading-tight text-center max-w-md mx-auto text-lg sm:text-xl md:text-2xl lg:text-3xl"  style="font-family: Nabla;" > WebSpace </h2>
-                        <p class="mt-0 leading-tight max-w-md mx-auto text-center text-xs text-center text-xs sm:text-xs md:text-sm lg:text-base " style="font-family: Nabla;"> Créer sans limite </p>
+            <a href=""> <h2 class=" mb-0 leading-tight text-center max-w-md mx-auto text-2xl sm:text-xl md:text-2xl lg:text-3xl"  style="font-family: Nabla;" > WebSpace </h2>
+                <p class="mt-0 leading-tight max-w-md mx-auto text-center text-xs sm:text-xs md:text-xs lg:text-xs" style="font-family: Nabla;">Créer sans limite</p>
+
+
+
             </a> <!-- Ajout de l'ID pour l'animation -->
         </div>
         <button id="menu-toggle" class="absolute top-3 right-6 z-50 text-white">
@@ -65,7 +70,7 @@
     </div>
     
     <main class="py-10 hidden" id="content-sections">
-    <section id="qui-sommes-nous" class="px-5 text-center bg-white bg-opacity-10 text-white rounded-lg shadow-lg max-w-3xl mx-auto my-8">
+    <section id="qui-sommes-nous" class="px-5 text-center bg-white bg-opacity-10 text-white rounded-lg shadow-lg max-w-3xl mx-auto my-8 p-4">
         <h2 class="text-3xl font-bold mb-5">Qui sommes-nous</h2>
         <p class="text-lg mb-4">
             Bienvenue chez <strong>WebSpace</strong> ! Nous sommes une agence digitale passionnée par la création d’expériences en ligne innovantes et impactantes. Notre mission est d’accompagner les entreprises, qu'elles soient petites ou grandes, dans le développement de leur visibilité numérique.
