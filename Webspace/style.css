@@ -80,6 +80,44 @@ header {
     
 }
 
+#horizontal-scroll-container {
+    display: flex;
+    gap: 1.5rem; /* Réduit l'espace entre les sections */
+    overflow-x: auto;
+    height: calc(100vh - 100px); /* Légèrement plus compact */
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 1.5rem;
+}
+
+section {
+    flex: 0 0 60vw; /* Réduit à 70% de la largeur de la fenêtre */
+    width: 60vw;
+    min-width: 60vw;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    scroll-snap-align: start;
+    padding: 1.5rem; /* Réduit le padding */
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+/* Styliser la barre de défilement pour les sections */
+section::-webkit-scrollbar {
+    width: 8px;
+}
+
+section::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+section::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+
 
 @media (max-width: 375px) {
     #welcome {

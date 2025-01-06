@@ -397,6 +397,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Nouveau code pour le défilement horizontal
+    const container = document.getElementById('horizontal-scroll-container');
+    const sections = container.querySelectorAll('section');
+
+    // Gestionnaire de navigation pour les liens du menu
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            if (!targetId) return;
+
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth', inline: 'start' });
+            }
+        });
+    });
+
+    
+
     // Timeline pour les animations (peut être étendue si nécessaire)
     const timeline = gsap.timeline();
 
