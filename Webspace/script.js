@@ -16,6 +16,17 @@ video.loop = true;
 video.muted = true;
 video.autoplay = true;
 
+video.addEventListener('loadeddata', () => {
+    const videoTexture = new THREE.VideoTexture(video);
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+    videoTexture.format = THREE.RGBFormat;
+
+    // Assigner la texture comme arrière-plan une fois qu'elle est prête
+    scene.background = videoTexture;
+});
+
+
 // Lecture forcée après interaction utilisateur
 function tryToPlayVideo() {
     video.play().catch(() => {
@@ -415,6 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    
     
 
     // Timeline pour les animations (peut être étendue si nécessaire)
