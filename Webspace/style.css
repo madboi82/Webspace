@@ -10,6 +10,7 @@ html::-webkit-scrollbar {
 
 html::-webkit-scrollbar-track {
     background: #ffffff;
+    
 }
 
 html::-webkit-scrollbar-thumb {
@@ -36,6 +37,11 @@ header {
     width: 100%;
     z-index: 10;
     background: transparent; /* Rend le header transparent par défaut */
+}
+
+input, textarea {
+    color: #000; /* Noir ou une autre couleur contrastante */
+    background-color: rgba(255, 255, 255, 0.9); /* Contraste avec le texte */
 }
 
 #logo h2 {
@@ -98,27 +104,37 @@ header {
     
 }
 
+
+
 #horizontal-scroll-container {
     display: flex;
-    gap: 1.5rem; /* Réduit l'espace entre les sections */
-    overflow-x: auto;
-    height: calc(100vh - 100px); /* Légèrement plus compact */
-    width: 100%;
-    scroll-snap-type: x mandatory;
-    padding: 0 1.5rem;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding-left: 30vw;
+    padding-right: 20vw;
+    perspective: 1200px; /* Profondeur de la perspective */
+    overflow-x: scroll; /* Empêche le scroll horizontal */
+    
 }
+
+
 
 #horizontal-scroll-container::-webkit-scrollbar{
     width: 8px;
+    height: 6px;
 }
 
 #horizontal-scroll-container::-webkit-scrollbar-track{
     background: #ffffff;
+    width: 6px;
     
 }
 
 #horizontal-scroll-container::-webkit-scrollbar-thumb{
     background: #e756dd;
+    width: 2px;
     border-radius: 6px;
 }
 
@@ -127,16 +143,36 @@ header {
 
 
 section {
-    flex: 0 0 40vw; 
+    flex: 0 0 40vw;  /* Largeur de chaque section */
     width: 40vw;
     min-width: 40vw;
-    max-height: 60vh;
+    height: 60vh;
+    margin-left: auto;
+    margin: 0 10vw;  /* Espacement entre les sections */
+    background: lightgray;
     overflow-y: auto;
-    scroll-snap-align: start;
-    padding: 1rem; 
+    padding: 1rem;
     box-sizing: border-box;
-    margin: 0 auto;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
 }
+
+section:hover {
+    transform: perspective(1000px) scale(1.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+
+
+
+
 
 @media (max-width: 1024px){
     section {

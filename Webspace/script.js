@@ -383,81 +383,124 @@ animate();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Ajouter un délai d'attente pour donner le temps à l'élément de se rendre dans le DOM
+    // Configuration initiale du logo
     gsap.set("#logo", {
-        scale: 1, // Assure-toi que le logo a une taille correcte
-        transformOrigin: "center", // Centre la rotation
+        scale: 1, 
+        transformOrigin: "center", 
         opacity: 1
     });
 
     // Animation GSAP pour le logo
-    gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, opacity:1, duration: 1.5, ease:"power2.out" });
+    gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, opacity: 1, duration: 1.5, ease: "power2.out" });
 
     // Animation GSAP pour le logo : vague fluide de gauche à droite
     gsap.to("#logo", {
-        x: 5, // Déplacement horizontal
-        y: 2, // Déplacement vertical
+        x: 5, 
+        y: 2, 
         duration: 2,
-        repeat: -1, // Répétition infinie
-        yoyo: true, // Effet aller-retour
-        ease: "sine.inOut", // Easing pour un mouvement fluide
+        repeat: -1, 
+        yoyo: true, 
+        ease: "sine.inOut", 
         stagger: {
-            amount: 0.5, // Ajoute un léger décalage pour une sensation de mouvement fluide
-            from: "start", // Le décalage commence du côté gauche
+            amount: 0.5, 
+            from: "start", 
         }
     });
 
-    // Nouveau code pour le défilement horizontal
+    
+
+    // Variables pour la rotation des sections
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    let currentRotation = 0;
+    let targetRotation = 0;
+    const rotationSpeed = 0.5;
     const container = document.getElementById('horizontal-scroll-container');
-    const sections = container.querySelectorAll('section');
+    const sections = document.querySelectorAll('#qui-sommes-nous, #nos-services, #nous-contacter');
 
-    // Gestionnaire de navigation pour les liens du menu
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            if (!targetId) return;
 
-            const targetSection = document.querySelector(targetId);
-            if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth', inline: 'start' });
-            }
+    sections.forEach((section) => {
+        section.addEventListener('mouseenter', () => {
+            gsap.to(section, {
+                scale: 1.1, // Augmentation légère de l'échelle
+                duration: 0.3, // Durée de l'animation
+                ease: "power2.out", // Transition douce
+            });
+        });
+
+        section.addEventListener('mouseleave', () => {
+            gsap.to(section, {
+                scale: 1, // Retour à l'échelle normale
+                duration: 0.3,
+                ease: "power2.out",
+            });
         });
     });
 
-    
-    
+    // Initialisation des sections
+    sections.forEach((section, index) => {
+        section.style.transform = `perspective(1000px) rotateY(0deg)`;
+        section.style.transition = 'transform 0.3s ease';
+    });
 
-    // Timeline pour les animations (peut être étendue si nécessaire)
-    const timeline = gsap.timeline();
+    // Gestion du défilement et de la rotation
+    container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - container.offsetLeft;
+        scrollLeft = container.scrollLeft;
+        container.style.cursor = 'grabbing';
+    });
 
+    container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        const x = e.pageX - container.offsetLeft;
+        const deltaX = x - startX;
+        container.scrollLeft = scrollLeft - deltaX;
 
-    // Animation pour les sous-services
-    const services = document.querySelectorAll('.service');
-
-    
-
-
-    services.forEach(service => {
-        service.addEventListener('mouseover', () => {
-            const subServices = service.querySelector('.sub-service');
-            if (subServices) {
-                gsap.to(subServices, { duration: 0.3, opacity: 1, display: 'flex' });
-            }
-        });
-
-        service.addEventListener('mouseout', () => {
-            const subServices = service.querySelector('.sub-service');
-            if (subServices) {
-                gsap.to(subServices, { duration: 0.3, opacity: 0, display: 'none' });
-            }
+        // Calcul de la rotation pour chaque section
+        sections.forEach((section) => {
+            const rect = section.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const distanceFromCenter = centerX - window.innerWidth / 2;
+            const rotation = -distanceFromCenter * 0.05;
+            section.style.transform = `perspective(1000px) rotateY(${rotation}deg)`;
         });
     });
+
+    container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+    });
+
+    // Animation automatique des sections
+    function animateSections() {
+        if (!isDragging) {
+            sections.forEach((section) => {
+                const rect = section.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const distanceFromCenter = centerX - window.innerWidth / 2;
+                const rotation = -distanceFromCenter * 0.03;
+                
+                // Animation fluide
+                section.style.transform = `perspective(1000px) rotateY(${rotation}deg)`;
+            });
+        }
+        requestAnimationFrame(animateSections);
+    }
+
+    animateSections();
+
+    
 
     // Gestion de la flèche de retour en haut
     const scrollToTopButton = document.getElementById("scrollToTop");
-
     window.addEventListener("scroll", () => {
         const isScrolled = document.body.scrollTop > 100 || document.documentElement.scrollTop > 100;
         scrollToTopButton.classList.toggle("hidden", !isScrolled);
@@ -473,15 +516,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmationMessage = document.getElementById('confirmation-message');
     const paperPlane = document.getElementById('paper-plane');
 
-    
-
     form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Empêche l'envoi réel du formulaire
-
-        // Affiche le message de confirmation
+        event.preventDefault();
         confirmationMessage.classList.remove('hidden');
 
-        // Animation pour faire décoller le paper plane avec effet de battement d'ailes
         gsap.fromTo(
             paperPlane,
             { opacity: 1, x: 0, y: 0, rotation: 0 },
@@ -498,12 +536,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         );
 
-        // Cache le message après quelques secondes
         setTimeout(() => {
             confirmationMessage.classList.add('hidden');
         }, 5000);
     });
 });
+
+
+
+
 
 
 
