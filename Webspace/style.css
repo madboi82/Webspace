@@ -96,13 +96,7 @@ input, textarea {
     overflow: hidden;
 }
 
-#welcome {
-    margin-top: -50px;
-    margin-left: 42%;
-    font-size: 80%;
-    width: 17%;
-    
-}
+
 
 
 
@@ -117,6 +111,7 @@ input, textarea {
     perspective: 1200px; /* Profondeur de la perspective */
     overflow-x: scroll; /* Empêche le scroll horizontal */
     
+    
 }
 
 
@@ -126,11 +121,7 @@ input, textarea {
     height: 6px;
 }
 
-#horizontal-scroll-container::-webkit-scrollbar-track{
-    background: #ffffff;
-    width: 6px;
-    
-}
+
 
 #horizontal-scroll-container::-webkit-scrollbar-thumb{
     background: #e756dd;
@@ -143,6 +134,7 @@ input, textarea {
 
 
 section {
+    justify-content: space-between;
     flex: 0 0 40vw;  /* Largeur de chaque section */
     width: 40vw;
     min-width: 40vw;
@@ -155,15 +147,19 @@ section {
     box-sizing: border-box;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: url('images/main_2.png'), auto;
     border-radius: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     
 }
 
+section, #qui-sommes-nous, #nos-services, #nous-contacter {
+
+    margin-right: 30vw;
+}
+
 section:hover {
-    transform: perspective(1000px) scale(1.1);
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
     background: rgba(0, 0, 0, 0.15);
     z-index: 10;

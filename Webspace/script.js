@@ -471,12 +471,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.addEventListener('mouseup', () => {
         isDragging = false;
-        container.style.cursor = 'grab';
+        
     });
 
     container.addEventListener('mouseleave', () => {
         isDragging = false;
-        container.style.cursor = 'grab';
+        
     });
 
     // Animation automatique des sections
