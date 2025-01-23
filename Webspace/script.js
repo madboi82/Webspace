@@ -1,3 +1,5 @@
+
+
 // Scene, camera, renderer setup
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -14,16 +16,31 @@ const video = document.createElement('video');
 video.src = 'videos/purpleDice.mp4'; // Chemin vers la vidéo
 video.loop = true;
 video.muted = true;
-video.autoplay = true;
+video.playsInline = true;
+
+
+
+
+
+
+
 
 video.addEventListener('loadeddata', () => {
     const videoTexture = new THREE.VideoTexture(video);
     videoTexture.minFilter = THREE.LinearFilter;
     videoTexture.magFilter = THREE.LinearFilter;
     videoTexture.format = THREE.RGBFormat;
-
+    
     // Assigner la texture comme arrière-plan une fois qu'elle est prête
     scene.background = videoTexture;
+
+    if (video.readyState >= 2) {
+        const videoTexture = new THREE.VideoTexture(video);
+        videoTexture.needsUpdate = true; // Indiquer que la texture doit être mise à jour
+        scene.background = videoTexture;
+    } else {
+        console.error("La vidéo n'est pas prête.");
+    }
 });
 
 
@@ -115,7 +132,8 @@ let mixer = null;
 let clock = new THREE.Clock();
 
 // Charger le modèle GLB (TV)
-const loader = new THREE.GLTFLoader();
+const loader = new THREE.GLTFLoader(); // Utilisation correcte avec l'import ES6
+
 let tv = null;
 
 loader.load(
@@ -126,9 +144,6 @@ loader.load(
         tv.scale.set(0, 0, 0);
         tv.position.set(0, 0.3, 0);
         tv.rotation.set(-Math.PI / -2, 0, 0); // Corrige l'orientation en inclinant de 90° sur X
-
-        
-        
 
         const boundingBox = new THREE.Box3().setFromObject(tv);
         const size = boundingBox.getSize(new THREE.Vector3());
@@ -147,6 +162,7 @@ loader.load(
             });
         }
 
+        // Fonction pour ajuster l'échelle de la télé en fonction de la taille de l'écran
         function updateAsteroidScale() {
             if (tv) {
                 if (window.innerWidth < 768) {
@@ -161,10 +177,8 @@ loader.load(
         // Appeler immédiatement après le chargement pour ajuster la télé
         updateAsteroidScale();
 
-
         // Détecter les changements de taille d'écran
-        window.addEventListener('resize', updateAsteroidScale,);
-        
+        window.addEventListener('resize', updateAsteroidScale);
 
         camera.position.z = Math.min(maxDimension * 1.5, 4.5);
         const center = boundingBox.getCenter(new THREE.Vector3());
@@ -449,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = true;
         startX = e.pageX - container.offsetLeft;
         scrollLeft = container.scrollLeft;
-        container.style.cursor = 'grabbing';
+        
     });
 
     container.addEventListener('mousemove', (e) => {
