@@ -399,8 +399,8 @@ animate();
 document.addEventListener('DOMContentLoaded', () => {
     // Configuration initiale du logo
     gsap.set("#logo", {
-        scale: 1, 
-        transformOrigin: "center", 
+        scale: 1,
+        transformOrigin: "center",
         opacity: 1
     });
 
@@ -409,71 +409,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Animation GSAP pour le logo : vague fluide de gauche à droite
     gsap.to("#logo", {
-        x: 5, 
-        y: 2, 
+        x: 5,
+        y: 2,
         duration: 2,
-        repeat: -1, 
-        yoyo: true, 
-        ease: "sine.inOut", 
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
         stagger: {
-            amount: 0.5, 
-            from: "start", 
+            amount: 0.5,
+            from: "start",
         }
     });
-
-    
 
     // Variables pour la rotation des sections
     let isDragging = false;
     let startX = 0;
     let scrollLeft = 0;
-    let currentRotation = 0;
-    let targetRotation = 0;
-    const rotationSpeed = 0.5;
     const container = document.getElementById('horizontal-scroll-container');
     const sections = document.querySelectorAll('#qui-sommes-nous, #nos-services, #nous-contacter');
-
 
     sections.forEach((section) => {
         section.addEventListener('mouseenter', () => {
             gsap.to(section, {
-                scale: 1.1, // Augmentation légère de l'échelle
-                duration: 0.3, // Durée de l'animation
-                ease: "power2.out", // Transition douce
+                scale: 1.1,
+                duration: 0.3,
+                ease: "power2.out",
             });
         });
 
         section.addEventListener('mouseleave', () => {
             gsap.to(section, {
-                scale: 1, // Retour à l'échelle normale
+                scale: 1,
                 duration: 0.3,
                 ease: "power2.out",
             });
         });
     });
 
-    // Initialisation des sections
-    sections.forEach((section, index) => {
-        section.style.transform = `perspective(1000px) rotateY(0deg)`;
-        section.style.transition = 'transform 0.3s ease';
-    });
-
-    // Gestion du défilement et de la rotation
     container.addEventListener('mousedown', (e) => {
         isDragging = true;
         startX = e.pageX - container.offsetLeft;
         scrollLeft = container.scrollLeft;
-        
     });
 
     container.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
-        
+
         const x = e.pageX - container.offsetLeft;
         const deltaX = x - startX;
         container.scrollLeft = scrollLeft - deltaX;
 
-        // Calcul de la rotation pour chaque section
         sections.forEach((section) => {
             const rect = section.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -485,15 +470,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.addEventListener('mouseup', () => {
         isDragging = false;
-        
     });
 
     container.addEventListener('mouseleave', () => {
         isDragging = false;
-        
     });
 
-    // Animation automatique des sections
     function animateSections() {
         if (!isDragging) {
             sections.forEach((section) => {
@@ -501,8 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const centerX = rect.left + rect.width / 2;
                 const distanceFromCenter = centerX - window.innerWidth / 2;
                 const rotation = -distanceFromCenter * 0.03;
-                
-                // Animation fluide
+
                 section.style.transform = `perspective(1000px) rotateY(${rotation}deg)`;
             });
         }
@@ -511,8 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animateSections();
 
-    
-
     // Gestion de la flèche de retour en haut
     const scrollToTopButton = document.getElementById("scrollToTop");
     window.addEventListener("scroll", () => {
@@ -520,41 +499,74 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollToTopButton.classList.toggle("hidden", !isScrolled);
     });
 
-    // Fonction pour faire défiler vers le haut
     scrollToTopButton.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
+    // Configuration EmailJS
+    emailjs.init("r6XTs5NEZliGBWczM");
+
     // Formulaire de contact : animation et confirmation
-    const form = document.querySelector('#nous-contacter form');
+    const form = document.querySelector('#contact');
     const confirmationMessage = document.getElementById('confirmation-message');
     const paperPlane = document.getElementById('paper-plane');
 
     form.addEventListener('submit', (event) => {
         event.preventDefault();
-        confirmationMessage.classList.remove('hidden');
 
-        gsap.fromTo(
-            paperPlane,
-            { opacity: 1, x: 0, y: 0, rotation: 0 },
-            {
-                opacity: 0,
-                x: 300,
-                y: -400,
-                duration: 5,
-                ease: "power6.out",
-                onUpdate: () => {
-                    const rotationDirection = Math.sin(gsap.globalTimeline.time() * 10) * 5;
-                    gsap.set(paperPlane, { rotation: rotationDirection });
+        // Préparation des données du formulaire
+        const formData = {
+            prenom: form.querySelector('[name="prenom"]').value,
+            nom: form.querySelector('[name="nom"]').value,
+            email: form.querySelector('[name="email"]').value,
+            message: form.querySelector('[name="message"]').value
+        };
+
+        console.log('FormData envoyé :', formData); // Debugging
+
+        // Envoi de l'email via EmailJS
+        emailjs.send(
+            'service_r3cl6dl', // Service ID
+            'template_nhthnkc', // Template ID
+            formData
+        )
+        .then((response) => {
+            console.log('Email envoyé avec succès:', response);
+            confirmationMessage.classList.remove('hidden');
+
+            // Animation de l'avion en papier
+            gsap.fromTo(
+                paperPlane,
+                { opacity: 1, x: 0, y: 0, rotation: 0 },
+                {
+                    opacity: 0,
+                    x: 300,
+                    y: -400,
+                    duration: 5,
+                    ease: "power6.out",
+                    onUpdate: () => {
+                        const rotationDirection = Math.sin(gsap.globalTimeline.time() * 10) * 5;
+                        gsap.set(paperPlane, { rotation: rotationDirection });
+                    }
                 }
-            }
-        );
+            );
 
-        setTimeout(() => {
-            confirmationMessage.classList.add('hidden');
-        }, 5000);
+            // Réinitialisation du formulaire
+            form.reset();
+
+            // Cacher le message de confirmation après 5 secondes
+            setTimeout(() => {
+                confirmationMessage.classList.add('hidden');
+            }, 5000);
+        })
+        .catch((error) => {
+            console.error('Erreur lors de l\'envoi:', error);
+            alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.');
+        });
     });
 });
+
+        
 
 
 
