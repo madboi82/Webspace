@@ -494,14 +494,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Gestion de la flèche de retour en haut
     const scrollToTopButton = document.getElementById("scrollToTop");
-    window.addEventListener("scroll", () => {
-        const isScrolled = document.body.scrollTop > 100 || document.documentElement.scrollTop > 100;
-        scrollToTopButton.classList.toggle("hidden", !isScrolled);
-    });
 
-    scrollToTopButton.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+window.addEventListener("scroll", () => {
+    const isScrolled = document.documentElement.scrollTop > 100;
+    scrollToTopButton.classList.toggle("hidden", !isScrolled);
+});
+
+scrollToTopButton.addEventListener("click", () => {
+    let position = window.scrollY;
+
+    function scrollStep() {
+        if (position > 0) {
+            window.scrollTo(0, 0);
+            position -= 150; // Augmente la vitesse en augmentant cette valeur
+            requestAnimationFrame(scrollStep);
+        }
+    }
+
+    scrollStep();
+});
+
 
     // Configuration EmailJS
     emailjs.init("r6XTs5NEZliGBWczM");
