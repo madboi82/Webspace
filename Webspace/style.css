@@ -171,28 +171,106 @@ section:hover {
 
 
 @media (max-width: 1024px){
+    #welcome {
+        margin-top: 200px;
+        margin-left: 30%;
+        font-size: 100%;
+        width: 40%;
+        
+    }
+
+    #mobile-navbar{
+        top: 30px;
+        width: 40%;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        right: 10px;
+
+
+    }
+
+    #mobile-navbar ul {
+        flex-direction: column; /* Organiser les éléments du menu en colonne */
+        padding: 0; /* Retirer le padding inutile */
+        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
+        
+    }
+
+    #mobile-navbar ul li {
+        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
+        font-size: 0.5rem;
+        margin-left: 10px;
+        
+    }
+
+
     section {
         flex: 0 0 70vw;
         width: 70vw;
         min-width: 70vw;
-        max-height: 85vh;
+        max-height: 40vh;
     }
 
-    section h2{
-        font-size: 1.3rem !important;
-    }
-
-    section p{
-        font-size: 0.8rem !important;
-    }
+    
 }
 
 
 @media (max-width: 768px){
+    #welcome {
+        margin-top: 100px;
+        margin-left: 30%;
+        font-size: 150%;
+        width: 40%;
+        
+    }
+
+    #mobile-navbar {
+        /* Passer à une disposition verticale pour les petits écrans */
+        flex-direction: column;
+        align-items: center; /* Centrer les éléments */
+        padding: 20px; /* Augmenter l'espacement interne pour aérer le contenu */
+        top: 30px; /* Aligner avec le bouton du menu */
+        right: 10px;
+        width: 60%; /* Réduire la largeur pour plus d'espace */
+        
+        
+    }
+
+    #mobile-navbar ul {
+        flex-direction: column; /* Organiser les éléments du menu en colonne */
+        padding: 0; /* Retirer le padding inutile */
+        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
+        
+    }
+
+    #mobile-navbar ul li {
+        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
+        padding: 0 ;
+        font-size: 0.5rem;
+    }
+
+    #menu-toggle {
+        /* Ajuster le bouton du menu pour les petits écrans */
+        top: 15px;
+        right: 20px;
+    }
+
+    /* Réduire la taille du logo pour les petits écrans */
+    #logo {
+        height: 40px; /* Taille plus petite pour s'adapter à l'écran */
+    }
+
+    
+
+    .background-image{
+        top: 40%;
+    }
+
     section {
-        flex: 0 0 60vw;
-        width: 60vw;
-        min-width: 60vw;
+        flex: 0 0 75vw;
+        width: 75vw;
+        min-width: 75vw;
         max-height: 50vh;
         padding: 0.75rem;
     }
@@ -220,9 +298,6 @@ section:hover {
     }
 
 }
-
-
-
 
 
 section h2{
@@ -329,106 +404,6 @@ section::-webkit-scrollbar-thumb {
 
 
 
-/* Media query pour les petits écrans */
-@media (max-width: 768px) {
-
-    #welcome {
-        margin-top: 100px;
-        margin-left: 30%;
-        font-size: 150%;
-        width: 40%;
-        
-    }
-
-    #mobile-navbar {
-        /* Passer à une disposition verticale pour les petits écrans */
-        flex-direction: column;
-        align-items: center; /* Centrer les éléments */
-        padding: 20px; /* Augmenter l'espacement interne pour aérer le contenu */
-        top: 30px; /* Aligner avec le bouton du menu */
-        right: 10px;
-        width: 60%; /* Réduire la largeur pour plus d'espace */
-        
-        
-    }
-
-    #mobile-navbar ul {
-        flex-direction: column; /* Organiser les éléments du menu en colonne */
-        padding: 0; /* Retirer le padding inutile */
-        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
-        
-    }
-
-    #mobile-navbar ul li {
-        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
-        padding: 0 ;
-        font-size: 0.5rem;
-    }
-
-    #menu-toggle {
-        /* Ajuster le bouton du menu pour les petits écrans */
-        top: 15px;
-        right: 20px;
-    }
-
-    /* Réduire la taille du logo pour les petits écrans */
-    #logo {
-        height: 40px; /* Taille plus petite pour s'adapter à l'écran */
-    }
-
-    
-
-    .background-image{
-        top: 40%;
-    }
-}
-
-
-
-
-
-
-
-
-@media (max-width: 1024px) {
-
-    #welcome {
-        margin-top: 200px;
-        margin-left: 30%;
-        font-size: 100%;
-        width: 40%;
-        
-    }
-
-    #mobile-navbar{
-        top: 30px;
-        width: 40%;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        right: 10px;
-
-
-    }
-
-    #mobile-navbar ul {
-        flex-direction: column; /* Organiser les éléments du menu en colonne */
-        padding: 0; /* Retirer le padding inutile */
-        width: 100%; /* S'assurer que l'élément prend toute la largeur disponible */
-        
-    }
-
-    #mobile-navbar ul li {
-        margin-bottom: 10px; /* Ajouter un espacement entre les éléments du menu */
-        font-size: 0.5rem;
-        margin-left: 10px;
-        
-    }
-
-   
-}
-
-
 .sub-service {
     display: none; /* Cacher par défaut */
 }
@@ -486,6 +461,7 @@ section::-webkit-scrollbar-thumb {
     .background-image{
         top: -8vh;
     }
+    
 
     
 }

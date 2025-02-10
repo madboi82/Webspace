@@ -196,7 +196,25 @@ loader.load(
     }
 );
 
+// Sélection de l'élément de l'indication de rotation
+const rotateHint = document.getElementById('rotate-hint');
 
+// Animation GSAP pour clignoter toutes les 0.5s
+gsap.to(rotateHint, { opacity: 0.1, repeat: -1, yoyo: true, duration: 0.5 });
+
+function toggleRotateHint(hide) {
+    if (hide) {
+        rotateHint.classList.add("hidden");
+    } else {
+        rotateHint.classList.remove("hidden");
+    }
+}
+
+// Cacher l'icône lors d'un clic de souris
+container.addEventListener("mousedown", () => toggleRotateHint(true));
+
+// Réafficher lorsque l'utilisateur relâche la souris
+container.addEventListener("mouseup", () => toggleRotateHint(false));
 
 
 
@@ -491,6 +509,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     animateSections();
+
+
 
     // Gestion de la flèche de retour en haut
     const scrollToTopButton = document.getElementById("scrollToTop");

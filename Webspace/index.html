@@ -44,12 +44,16 @@
         </nav>
     </header>
 
-    
+
+
        <!-- Conteneur de l'écran avec l'image de l'écran -->
        <div id="container" class="absolute inset-0">
         
+        <div id="rotate-hint" class="absolute bottom-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white z-50 ">
+            <img src="images/rotation.png" class="w-12 h-12 animate-bounce" alt="Icône rotation">
+            <p class="text-sm font-bold animate-bounce">Faites tourner la télé</p>
+          </div>
 
-        
           <!-- Affichage du chargement -->
          <div id="loading-screen" class="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-80 z-50">
             <p class="text-white text-lg mb-4">Chargement en cours...</p>
@@ -59,6 +63,7 @@
             <p id="progress-text" class="text-white text-sm mt-2">0%</p>
          </div>
       </div>
+      
       <!-- Bouton Voir Plus -->
       <button id="see-more-button" 
       class="absolute bottom-10 left-1/2 transform -translate-x-1/2  z-50">
@@ -101,9 +106,9 @@
 
                 <h3 class="text-xl font-bold text-white relative z-10">Création de sites web</h3>
                 
-                <div class="sub-service flex mt-2 justify-center  z-10 ">
-                    <div class="absolute w-full h-full top-0 left-0 overflow-hidden opacity-50 ">
-                        <video autoplay loop muted class="object-cover" >
+                <div class="sub-service flex mt-2 justify-center z-10 ">
+                    <div>
+                        <video autoplay loop muted class="absolute w-full h-full object-cover top-0 left-0 overflow-hidden opacity-50 "  >
                             <source src="videos/site-web.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -113,7 +118,6 @@
                         <img src="images/vitrine(1).png" class="block mx-auto  relative z-10 " alt="site vitrine">
                         <p class="text-white font-bold relative z-10">Site vitrine</p>
                     </div>
-                    
                     <div class="relative">
                         <div class="absolute inset-0 bg-black opacity-90 rounded-lg"></div>
                         <img src="images/dossier-portfolio.png" class="block mx-auto relative z-10" alt="Portfolio">
@@ -128,43 +132,42 @@
             <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service relative z-10 overflow-hidden">
                 <h3 class="text-xl font-bold text-white relative z-10">Référencement de sites web</h3>
                 <div class="sub-service flex mt-2 justify-center z-10">
-                    <div class="absolute w-full h-full top-0 left-0 overflow-hidden opacity-50 ">
-                        <video autoplay loop muted class="object-cover" >
-                            <source src="videos/support-nfc.mp4" type="video/mp4">
+                    <div>
+                        <video autoplay loop muted class="absolute w-full h-full object-cover top-0 left-0 overflow-hidden opacity-50" >
+                            <source src="videos/référencement-web.mp4" type="video/mp4">
                         </video>
                     </div>
 
                     <div class="relative">
                         <div class="absolute inset-0 bg-black opacity-100 rounded-lg"></div>
                         <img src="images/lanalyse-des-donnees.png" class="block mx-auto" alt="analyse données">
-                        <p class="text-white text-center">Google Ads</p>
+                        <p class="text-white font-bold relative z-10">Google Ads</p>
                     </div>
                 </div>
-                <p class="text-white relative z-10">Optimisez votre visibilité en ligne avec notre expertise en référencement payant.</p>
+                <p class="text-white font-bold relative z-10">Optimisez votre visibilité en ligne avec notre expertise en référencement payant.</p>
                 <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block relative z-10">En savoir plus</a>
             </div>
 
-            <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service">
-                <h3 class="text-xl font-bold text-white">Présence sur le web</h3>
-                <div class="sub-service flex mt-2 justify-center">
+
+
+            <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service relative z-10">
+                <h3 class="text-xl font-bold text-white relative z-10">Carte NFC</h3>
+                <div class="sub-service flex mt-2 justify-center z-10">
+
                     <div>
-                        <img src="images/profil.png" class="block mx-auto" alt="profil">
-                        <p class="text-white">Business Profile</p>
+                        <video autoplay loop muted class="absolute w-full h-full object-cover  top-0 left-0 overflow-hidden opacity-50 " >
+                            <source src="videos/support-nfc.mp4" type="video/mp4">
+                        </video>
                     </div>
-                </div>
-                <p class="text-white">Améliorez votre présence en ligne avec Google Business Profile.</p>
-                <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
-            </div>
-            <div class="bg-white bg-opacity-10 p-5 rounded-lg shadow-lg service">
-                <h3 class="text-xl font-bold text-white ">Carte NFC</h3>
-                <div class="sub-service flex mt-2 justify-center">
-                    <div>
+
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-black opacity-100 rounded-lg"></div>
                         <img src="images/nfc.png" class="block mx-auto" alt="nfc carte">
-                        <p class="text-white">Avis Google</p>
+                        <p class="text-white text-center font-bold relative z-10">Avis Google</p>
                     </div>
                 </div>
-                <p class="text-white">Facilitez la collecte d'avis clients grâce à notre solution de carte NFC.</p>
-                <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block">En savoir plus</a>
+                <p class="text-white font-bold relative z-10">Facilitez la collecte d'avis clients grâce à notre solution de carte NFC.</p>
+                <a href="#nous-contacter" class="text-pink-300 hover:underline mt-2 block font-bold relative z-10">En savoir plus</a>
             </div>
         </div>
     </section>
