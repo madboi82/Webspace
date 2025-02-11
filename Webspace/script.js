@@ -44,6 +44,8 @@ video.addEventListener('loadeddata', () => {
 });
 
 
+
+
 // Lecture forcée après interaction utilisateur
 function tryToPlayVideo() {
     video.play().catch(() => {
