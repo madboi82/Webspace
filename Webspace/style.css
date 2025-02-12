@@ -217,6 +217,9 @@ section:hover {
 
 
 @media (max-width: 768px){
+
+
+
     #welcome {
         margin-top: 100px;
         margin-left: 30%;
@@ -259,6 +262,7 @@ section:hover {
     /* Réduire la taille du logo pour les petits écrans */
     #logo {
         height: 40px; /* Taille plus petite pour s'adapter à l'écran */
+        font-size: 28px; 
     }
 
     
