@@ -45,11 +45,17 @@ input, textarea {
 }
 
 #logo {
-    position: relative;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: auto;
+    height: auto;
+    text-align: center;
     z-index: 20;
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
+    border: 2px solid red !important;
 }
 
 
@@ -66,13 +72,14 @@ input, textarea {
 #logo p {
     position: relative;
     z-index: 20;
-    margin-top: 0; /* Supprime la marge supérieure de p */
+    opacity: 1 !important;
     line-height: 1.2; /* Ajuste la hauteur de ligne pour p */
     font-size: clamp(0.6rem, 1.5vw, 0.8rem); /* Taille responsive */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     opacity: 1 !important;
     visibility: visible !important;
     display: block !important;
+    
 }
 
 
