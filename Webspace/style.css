@@ -64,6 +64,8 @@ input, textarea {
 }
 
 #logo p {
+    position: relative;
+    z-index: 20;
     margin-top: 0; /* Supprime la marge supérieure de p */
     line-height: 1.2; /* Ajuste la hauteur de ligne pour p */
     font-size: clamp(0.6rem, 1.5vw, 0.8rem); /* Taille responsive */
