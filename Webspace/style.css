@@ -47,6 +47,9 @@ input, textarea {
 #logo {
     position: relative;
     z-index: 20;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
 }
 
 
@@ -55,6 +58,9 @@ input, textarea {
     line-height: 1.2; /* Ajuste la hauteur de ligne pour h2 */
     font-size: clamp(1.2rem, 3vw, 2rem); /* Taille responsive */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
 }
 
 #logo p {
@@ -62,6 +68,9 @@ input, textarea {
     line-height: 1.2; /* Ajuste la hauteur de ligne pour p */
     font-size: clamp(0.6rem, 1.5vw, 0.8rem); /* Taille responsive */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
 }
 
 
@@ -274,17 +283,22 @@ section:hover {
         transform: scale(0.9);
         margin-left: 0.5rem;
         height: 40px; /* Taille plus petite pour s'adapter à l'écran */
+        -webkit-transform: scale(0.9);
         
     }
 
     #logo h2 {
         font-size: clamp(1.2rem, 3vw, 1.8rem);
         white-space: nowrap; /* Empêche le retour à la ligne */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     #logo p {
         font-size: clamp(0.6rem, 1.5vw, 0.8rem);
         white-space: nowrap;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     
@@ -393,10 +407,12 @@ section::-webkit-scrollbar-thumb {
 
     #logo {
         transform: scale(0.8);
+        -webkit-transform: scale(0.8);
     }
 
     #logo h2 {
         font-size: clamp(1rem, 2.5vw, 1.5rem);
+
     }
 
     #logo p {
@@ -431,9 +447,19 @@ section::-webkit-scrollbar-thumb {
         height: 35px;
     }
 
-    
 
     
+}
+
+/* Force l'affichage sur iOS */
+@supports (-webkit-touch-callout: none) {
+    #logo, #logo h2, #logo p {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 
