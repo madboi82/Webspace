@@ -18,6 +18,20 @@ video.loop = true;
 video.muted = true;
 video.playsInline = true;
 
+function resizeVideoTexture() {
+    video.width = window.innerWidth;
+    video.height = window.innerHeight;
+}
+
+function adjustVideoSize() {
+    const sceneContainer = document.getElementById('scene-container');
+    const viewportHeight = window.innerHeight; // Hauteur réelle visible
+    sceneContainer.style.height = `${viewportHeight}px`; // Appliquer la bonne hauteur
+}
+
+// Ajuster la hauteur immédiatement et à chaque redimensionnement
+window.addEventListener('resize', adjustVideoSize);
+adjustVideoSize();
 
 
 
@@ -332,6 +346,57 @@ container.addEventListener('mouseup', () => {
 });
 
 
+let isTouching = false;
+let previousTouchPosition = { x: 0, y: 0 };
+
+// Activer la rotation tactile lorsque l'on touche l'icône de rotation (rotateHint)
+rotateHint.addEventListener('touchstart', (event) => {
+    isTouching = true;
+    const touch = event.touches[0]; // Prendre la première touche
+    previousTouchPosition.x = touch.clientX;
+    previousTouchPosition.y = touch.clientY;
+    event.preventDefault(); // Empêcher l'action par défaut (scroll)
+
+    // Appel de la fonction toggleRotateHint pour cacher l'icône de rotation
+    toggleRotateHint(true);
+});
+
+// Gérer le mouvement tactile pour faire pivoter la télé
+container.addEventListener('touchmove', (event) => {
+    if (isTouching && tv) { // Vérifier si on est en train de toucher la télé
+        const touch = event.touches[0]; // Prendre la première touche
+
+        const deltaX = touch.clientX - previousTouchPosition.x;
+        const deltaY = touch.clientY - previousTouchPosition.y;
+
+        // Ajuster la rotation de la télé en fonction des déplacements tactiles
+        tv.rotation.y += deltaX * 0.005; // Rotation sur l'axe Y (horizontal)
+        tv.rotation.x += deltaY * 0.005; // Rotation sur l'axe X (vertical)
+
+        // Mettre à jour la position de la touche précédente
+        previousTouchPosition.x = touch.clientX;
+        previousTouchPosition.y = touch.clientY;
+
+        event.preventDefault(); // Empêcher l'action par défaut (scroll)
+    }
+});
+
+// Désactiver la rotation tactile lorsque l'utilisateur relâche
+container.addEventListener('touchend', () => {
+    isTouching = false; // Fin du mouvement tactile
+//Appel de la fonction toggleRotateHint pour réafficher l'icône
+    toggleRotateHint(false);
+});
+
+
+
+
+
+
+
+
+
+
 
 
 function onMouseClick(event) {
@@ -513,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateSections();
 
 
-
+    
     // Gestion de la flèche de retour en haut
     const scrollToTopButton = document.getElementById("scrollToTop");
 
@@ -535,6 +600,7 @@ scrollToTopButton.addEventListener("click", () => {
 
     scrollStep();
 });
+
 
 
     // Configuration EmailJS
