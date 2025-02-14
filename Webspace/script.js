@@ -388,6 +388,19 @@ container.addEventListener('touchend', () => {
     toggleRotateHint(false);
 });
 
+document.querySelectorAll("video").forEach(video => {
+    video.addEventListener("click", (event) => {
+        event.preventDefault(); // Empêche l'ouverture dans une nouvelle fenêtre
+        
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
+});
+
+
 
 
 
