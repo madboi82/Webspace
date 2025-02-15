@@ -203,10 +203,14 @@ loader.load(
         document.getElementById('loading-screen').style.display = 'none';
     },
     function (xhr) {
-        const progress = (xhr.loaded / xhr.total) * 100;
+        let progress = (xhr.loaded / xhr.total) * 100;
+        progress = Math.min(progress, 100); // Empêche de dépasser 100%
+    
         document.getElementById('progress-bar').style.width = `${progress}%`;
         document.getElementById('progress-text').textContent = `${Math.round(progress)}%`;
     },
+    
+    
     function (error) {
         console.error('Erreur chargement modèle:', error);
     }
