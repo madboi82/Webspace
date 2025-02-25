@@ -8,7 +8,16 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+
+// Configuration de CORS pour autoriser ton domaine spécifique
+app.use(cors({
+    origin: 'https://mywebspace.fr', // Remplace par ton domaine
+    methods: 'GET, POST',
+    allowedHeaders: 'Content-Type'
+}));
+
+
 
 // Configuration de Nodemailer
 const transporter = nodemailer.createTransport({
@@ -20,7 +29,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Route pour recevoir les données du chatbot
-app.post('/send-message', async (req, res) => {
+app.post('/api/send-message', async (req, res) => {
     const { service, name, phone } = req.body;
 
     if (!service || !name || !phone) {
