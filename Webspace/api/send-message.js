@@ -1,8 +1,16 @@
 const nodemailer = require('nodemailer');
 
-
-
 export default async function handler(req, res) {
+    // Ajouter des en-têtes CORS pour autoriser l'accès
+    res.setHeader('Access-Control-Allow-Origin', 'https://mywebspace.fr');  // Autoriser ton domaine
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');  // Autoriser seulement POST et OPTIONS
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Gérer les requêtes OPTIONS (CORS preflight)
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     if (req.method === 'POST') {
         const { service, name, phone } = req.body;
 
@@ -11,16 +19,14 @@ export default async function handler(req, res) {
         }
 
         try {
-            // Configuration de Nodemailer
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: process.env.EMAIL_USER,  // Ton email d’envoi
+                    user: process.env.EMAIL_USER,  // Ton adresse email d’envoi
                     pass: process.env.EMAIL_PASS   // Ton mot de passe d'application
                 }
             });
 
-            // Email à envoyer
             const mailOptions = {
                 from: process.env.EMAIL_USER,  // Email de l'expéditeur
                 to: 'contacts.webspace@gmail.com', // Ton email de réception

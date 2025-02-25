@@ -9,15 +9,15 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 
-
 // Configuration de CORS pour autoriser ton domaine spécifique
 app.use(cors({
-    origin: 'https://mywebspace.fr', // Remplace par ton domaine
+    origin: 'https://mywebspace.fr', // Remplace par ton domaine exact
     methods: 'GET, POST',
-    allowedHeaders: 'Content-Type'
+    allowedHeaders: 'Content-Type',
 }));
 
-
+// Autoriser toutes les méthodes OPTIONS pour gérer les pré-requêtes
+app.options('*', cors());  // Gestion des pré-requêtes
 
 // Configuration de Nodemailer
 const transporter = nodemailer.createTransport({
@@ -59,3 +59,4 @@ app.post('/api/send-message', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
+
