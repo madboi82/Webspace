@@ -6,9 +6,18 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// Middleware CORS
+const corsOptions = {
+    origin: 'https://mywebspace.fr',  // Remplace par l'URL de ton frontend
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+};
+
+// Appliquer CORS avec les options
+app.use(cors(corsOptions));
+
+// Middleware pour parser les données JSON
 app.use(express.json());
-app.use(cors());
 
 // Configuration de Nodemailer
 const transporter = nodemailer.createTransport({
