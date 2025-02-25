@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sendBtn.disabled = true;
 
         // Envoyer les données à l'API
-        fetch("http://localhost:5000/send-message", {
+        fetch("https://mon-api.vercel.app/api/send-message", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
