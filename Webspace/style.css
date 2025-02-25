@@ -228,6 +228,86 @@ section:hover {
 }
 
 
+/* Animations d'ouverture et de fermeture */
+.open {
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.close {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* Scroll fluide */
+#messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background: #0078ff;
+    border-radius: 10px;
+}
+
+/* Style des messages */
+.message {
+    max-width: 75%;
+    display: flex;
+    align-items: center;
+}
+
+.bot-message {
+    background: #e6e6e6;
+    color: black;
+    padding: 10px;
+    border-radius: 15px 15px 15px 5px;
+    align-self: flex-start;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.user-message {
+    background: #0078ff;
+    color: white;
+    padding: 10px;
+    border-radius: 15px 15px 5px 15px;
+    align-self: flex-end;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+/* Ajout d'avatars */
+.message-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.user-message .message-avatar {
+    margin-left: 8px;
+    margin-right: 0;
+}
 
 
 

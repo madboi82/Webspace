@@ -193,12 +193,34 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4l-8 8h16l-8-8z" />
         </svg>
     </div>
+
+    <!-- Icône du chatbot -->
+<div id="chatbot-icon" class="fixed bottom-10 left-5 w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition">
+    <img src="images/icons8-chatbot-48.png" alt="Chatbot" class="w-8 h-8">
+</div>
+
+<!-- Fenêtre du chatbot -->
+<div id="chatbot-container" class="hidden fixed bottom-20 left-5 w-80 bg-white shadow-xl rounded-xl flex flex-col border border-gray-300">
+    <div id="chat-header" class="bg-blue-500 text-white flex justify-between items-center px-4 py-2 rounded-t-xl">
+        <span class="font-semibold">💬 Chatbot WebSpace</span>
+        <button id="close-chat" class="text-lg">✖</button>
+    </div>
+    <div id="messages" class="h-72 overflow-y-auto p-3 bg-gray-100 flex flex-col space-y-2"></div>
+    <div id="chat-footer" class="flex items-center p-2 border-t border-gray-300">
+        <input type="text" id="user-input" class="flex-1 px-3 py-2 border rounded-lg text-sm outline-none" placeholder="Écrivez ici..." disabled>
+        <button id="send-btn" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">➤</button>
+    </div>
+</div>
+
+
+
     </main>
 
     <footer class="hidden bg-black bg-opacity-70 text-center p-5" id="footer">
         <p class="text-white">&copy; 2024 WebSpace </p>
     </footer>
     <script type="module" src="script.js"></script>
+    <script type="module" src="chatbot.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16876949109"></script>
     <script>
