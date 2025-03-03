@@ -100,34 +100,77 @@ document.addEventListener("DOMContentLoaded", function () {
         step = 3;
         sendMessage("Merci ! Sélectionnez votre pays et entrez votre numéro de téléphone 📞", false);
     
-        // Liste des indicatifs téléphoniques
+        // Liste des indicatifs téléphoniques avec les images des drapeaux
         const countryCodes = [
-            { code: "+33", country: "🇫🇷 France" },
-            { code: "+32", country: "🇧🇪 Belgique" },
-            { code: "+41", country: "🇨🇭 Suisse" },
-            { code: "+1", country: "🇺🇸 USA" },
-            { code: "+44", country: "🇬🇧 UK" },
-            { code: "+49", country: "🇩🇪 Allemagne" }
+            { code: "+33", country: "France", flag: "images/icons8-france-48.png" },
+            { code: "+32", country: "Belgique", flag: "images/icons8-belgium-48.png" },
+            { code: "+41", country: "Suisse", flag: "images/icons8-switzerland-48.png" },
+            { code: "+1", country: "USA", flag: "images/icons8-usa-48.png" },
+            { code: "+44", country: "UK", flag: "images/icons8-united-kingdom-48.png" },
+            { code: "+49", country: "Allemagne", flag: "images/icons8-germany-48.png" }
         ];
     
-        // Création du menu déroulant pour l'indicatif
-        const select = document.createElement("select");
-        select.classList.add("p-2", "border", "rounded-lg", "text-sm");
-        select.innerHTML = countryCodes.map(c => `<option value="${c.code}">${c.country} (${c.code})</option>`).join("");
+        // Création du conteneur principal
+        const countryContainer = document.createElement("div");
+        countryContainer.classList.add("flex", "items-center", "space-x-2", "mt-2");
     
+        // Création du menu déroulant avec les indicatifs et les drapeaux
+        const select = document.createElement("div");
+        select.classList.add("flex", "items-center", "space-x-2", "border", "rounded-lg", "p-2", "text-sm", "w-full");
+    
+        // Ajout des pays avec indicatifs et drapeaux
+        const countrySelect = document.createElement("div");
+        countrySelect.classList.add("flex", "items-center", "space-x-2", "w-full");
+        countryCodes.forEach(country => {
+            const countryBtn = document.createElement("button");
+            countryBtn.classList.add("flex", "items-center", "space-x-2", "border", "rounded-lg", "text-sm", "p-2", "cursor-pointer", "w-full");
+            countryBtn.innerHTML = `<img src="${country.flag}" alt="${country.country}" style="width: 20px; height: 15px;" /> ${country.code}`;
+    
+            // Action de sélection d'un pays
+            countryBtn.addEventListener("click", function () {
+                selectCountry(country.code, country.flag);
+            });
+    
+            countrySelect.appendChild(countryBtn);
+        });
+    
+        select.appendChild(countrySelect);
+        countryContainer.appendChild(select);
+    
+        // Champ de saisie du numéro de téléphone
         const phoneContainer = document.createElement("div");
-        phoneContainer.classList.add("flex", "items-center", "space-x-2", "mt-2");
+        phoneContainer.classList.add("flex", "items-center", "space-x-2", "mt-2", "w-full");
     
-        // Champ de saisie du numéro
         const input = document.createElement("input");
         input.type = "tel";
         input.placeholder = "Ex: 612345678";
         input.classList.add("p-2", "border", "rounded-lg", "text-sm", "flex-1");
     
-        phoneContainer.appendChild(select);
         phoneContainer.appendChild(input);
-        messagesDiv.appendChild(phoneContainer);
+        countryContainer.appendChild(phoneContainer);
+        messagesDiv.appendChild(countryContainer);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+        // Fonction pour gérer la sélection du pays et de son indicatif
+        let selectedCode = "";
+        let selectedFlag = "";
+    
+        function selectCountry(code, flag) {
+            selectedCode = code;
+            selectedFlag = flag;
+    
+            // Afficher le drapeau et l'indicatif sélectionné
+            const selectedCountryDisplay = document.createElement("div");
+            selectedCountryDisplay.classList.add("flex", "items-center", "space-x-2");
+            selectedCountryDisplay.innerHTML = `<img src="${selectedFlag}" alt="Drapeau sélectionné" style="width: 20px; height: 15px;" /> ${selectedCode}`;
+    
+            // Remplacer l'affichage actuel de la sélection du pays
+            select.innerHTML = ""; // Efface le menu déroulant
+            select.appendChild(selectedCountryDisplay);
+    
+            // Mettre à jour l'input avec l'indicatif sélectionné
+            input.focus();
+        }
     
         // Bouton de validation
         const validateBtn = document.createElement("button");
@@ -135,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
         validateBtn.classList.add("bg-green-500", "text-white", "px-3", "py-1", "rounded-md", "text-sm", "cursor-pointer", "mt-2");
     
         validateBtn.addEventListener("click", function () {
-            const selectedCode = select.value;
             const phoneNumber = input.value.trim().replace(/\s/g, ''); // Supprime les espaces
     
             if (!/^\d{9}$/.test(phoneNumber)) {
@@ -152,6 +194,11 @@ document.addEventListener("DOMContentLoaded", function () {
     
         messagesDiv.appendChild(validateBtn);
     }
+    
+    
+    
+    
+    
     
     
 
