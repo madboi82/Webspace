@@ -98,10 +98,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function askPhone() {
         step = 3;
-        sendMessage("Merci ! Quel est votre numéro de téléphone ?", false);
-        userInput.value = "";
-        userInput.placeholder = "Ex: 0612345678";
+        sendMessage("Merci ! Sélectionnez votre pays et entrez votre numéro de téléphone 📞", false);
+    
+        // Liste des indicatifs téléphoniques
+        const countryCodes = [
+            { code: "+33", country: "🇫🇷 France" },
+            { code: "+32", country: "🇧🇪 Belgique" },
+            { code: "+41", country: "🇨🇭 Suisse" },
+            { code: "+1", country: "🇺🇸 USA" },
+            { code: "+44", country: "🇬🇧 UK" },
+            { code: "+49", country: "🇩🇪 Allemagne" }
+        ];
+    
+        // Création du menu déroulant pour l'indicatif
+        const select = document.createElement("select");
+        select.classList.add("p-2", "border", "rounded-lg", "text-sm");
+        select.innerHTML = countryCodes.map(c => `<option value="${c.code}">${c.country} (${c.code})</option>`).join("");
+    
+        const phoneContainer = document.createElement("div");
+        phoneContainer.classList.add("flex", "items-center", "space-x-2", "mt-2");
+    
+        // Champ de saisie du numéro
+        const input = document.createElement("input");
+        input.type = "tel";
+        input.placeholder = "Ex: 612345678";
+        input.classList.add("p-2", "border", "rounded-lg", "text-sm", "flex-1");
+    
+        phoneContainer.appendChild(select);
+        phoneContainer.appendChild(input);
+        messagesDiv.appendChild(phoneContainer);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    
+        // Bouton de validation
+        const validateBtn = document.createElement("button");
+        validateBtn.textContent = "Valider";
+        validateBtn.classList.add("bg-green-500", "text-white", "px-3", "py-1", "rounded-md", "text-sm", "cursor-pointer", "mt-2");
+    
+        validateBtn.addEventListener("click", function () {
+            const selectedCode = select.value;
+            const phoneNumber = input.value.trim().replace(/\s/g, ''); // Supprime les espaces
+    
+            if (!/^\d{9}$/.test(phoneNumber)) {
+                sendMessage("Numéro invalide ❌. Entrez 9 chiffres sans l'indicatif.", false);
+                // Effacer le champ de saisie et redemander
+                phoneContainer.remove();
+                askPhone();  // Appel récursif pour redemander la saisie
+                return;
+            }
+    
+            userData.phone = `${selectedCode} ${phoneNumber}`;
+            finalizeChat();
+        });
+    
+        messagesDiv.appendChild(validateBtn);
     }
+    
+    
 
     function finalizeChat() {
         sendMessage("Merci pour ces informations ! Un conseiller va vous recontacter très prochainement. Excellente journée ! 😊", false);

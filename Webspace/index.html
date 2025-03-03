@@ -16,11 +16,6 @@
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
     <!-- Event snippet for Envoi de formulaire pour prospects conversion page -->
-<script>
-    gtag('event', 'conversion', {'send_to': 'AW-16876949109/jiTsCL2WlaAaEPWcx-8-'});
-  </script>
-  
-
 
     <link href="style.css" rel="stylesheet">
 
@@ -195,17 +190,18 @@
     </div>
 
     <!-- Icône du chatbot -->
-    <div id="chatbot-icon-container" class="fixed bottom-10 left-5 flex flex-col items-center space-y-1 cursor-pointer">
-        <div id="chatbot-icon" class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition">
-            <img src="images/icons8-chatbot-48.png" alt="Chatbot" class="w-8 h-8">
-        </div>
-        <p class="text-white text-sm font-semibold">Parlez au chatbot</p>
+<div id="chatbot-icon-container" class="fixed bottom-10 left-5 flex flex-col items-center space-y-1 cursor-pointer z-10">
+    <div id="chatbot-icon" class="w-14 h-14 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center hover:scale-110 transition">
+        <img src="images/icons8-chatbot-48.png" alt="Chatbot" class="w-8 h-8 sm:w-6 sm:h-6">
     </div>
+    <p class="text-white text-sm sm:text-xs font-semibold">Parlez au chatbot</p>
+</div>
+
     
 
 
 <!-- Fenêtre du chatbot -->
-<div id="chatbot-container" class="hidden fixed bottom-20 left-5 w-80 bg-white shadow-xl rounded-xl flex flex-col border border-gray-300">
+<div id="chatbot-container" class="hidden fixed bottom-20 left-5 w-80 bg-white shadow-xl rounded-xl flex flex-col border border-gray-300 z-50">
     <div id="chat-header" class="bg-blue-500 text-white flex justify-between items-center px-4 py-2 rounded-t-xl">
         <span class="font-semibold">💬 Chatbot WebSpace</span>
         <button id="close-chat" class="text-lg">✖</button>
@@ -235,5 +231,23 @@
 
         gtag('config', 'AW-16876949109');
     </script>
+    <!-- Google Tag Manager -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16876949109"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-16876949109');
+</script>
+
+<!-- Balise de conversion Google Ads -->
+<script>
+    function sendConversion() {
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16876949109/jiTsCL2WlaAaEPWcx-8-'
+        });
+    }
+</script>
+
 </body>
 </html>

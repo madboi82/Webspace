@@ -681,6 +681,11 @@ scrollToTopButton.addEventListener("click", () => {
             alert('Une erreur est survenue lors de l\'envoi du message. Veuillez réessayer.');
         });
     });
+
+    document.querySelector("#contact").addEventListener("submit", function(event) {
+        sendConversion(); // Envoie la conversion Google Ads
+    });
+    
 });
 
         

@@ -59,4 +59,3 @@ app.post('/api/send-message', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
-
