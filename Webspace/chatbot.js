@@ -100,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step = 3;
         sendMessage("Merci ! Sélectionnez votre pays et entrez votre numéro de téléphone 📞", false);
     
-        // Liste des indicatifs téléphoniques avec les images des drapeaux
         const countryCodes = [
             { code: "+33", country: "France", flag: "images/icons8-france-48.png" },
             { code: "+32", country: "Belgique", flag: "images/icons8-belgium-48.png" },
@@ -110,24 +109,44 @@ document.addEventListener("DOMContentLoaded", function () {
             { code: "+49", country: "Allemagne", flag: "images/icons8-germany-48.png" }
         ];
     
-        // Création du conteneur principal
         const countryContainer = document.createElement("div");
-        countryContainer.classList.add("flex", "items-center", "space-x-2", "mt-2");
+        countryContainer.classList.add("flex", "flex-col", "w-full", "gap-2", "mt-2");
     
-        // Création du menu déroulant avec les indicatifs et les drapeaux
         const select = document.createElement("div");
-        select.classList.add("flex", "items-center", "space-x-2", "border", "rounded-lg", "p-2", "text-sm", "w-full");
+        select.classList.add("w-full", "p-2", "rounded-lg", "bg-gray-100");
     
-        // Ajout des pays avec indicatifs et drapeaux
         const countrySelect = document.createElement("div");
-        countrySelect.classList.add("flex", "items-center", "space-x-2", "w-full");
+        countrySelect.classList.add("grid", "grid-cols-2", "gap-2", "w-full");
+    
         countryCodes.forEach(country => {
             const countryBtn = document.createElement("button");
-            countryBtn.classList.add("flex", "items-center", "space-x-2", "border", "rounded-lg", "text-sm", "p-2", "cursor-pointer", "w-full");
-            countryBtn.innerHTML = `<img src="${country.flag}" alt="${country.country}" style="width: 20px; height: 15px;" /> ${country.code}`;
+            countryBtn.classList.add(
+                "flex",
+                "items-center",
+                "justify-start",
+                "space-x-2",
+                "border",
+                "rounded-lg",
+                "p-2",
+                "cursor-pointer",
+                "hover:bg-gray-200",
+                "w-full",
+                "transition-colors"
+            );
+            
+            const flagImg = document.createElement("img");
+            flagImg.src = country.flag;
+            flagImg.alt = country.country;
+            flagImg.style.width = "17px";
+            flagImg.style.height = "15px";
+            
+            const codeSpan = document.createElement("span");
+            codeSpan.textContent = country.code;
+            
+            countryBtn.appendChild(flagImg);
+            countryBtn.appendChild(codeSpan);
     
-            // Action de sélection d'un pays
-            countryBtn.addEventListener("click", function () {
+            countryBtn.addEventListener("click", function() {
                 selectCountry(country.code, country.flag);
             });
     
@@ -137,21 +156,59 @@ document.addEventListener("DOMContentLoaded", function () {
         select.appendChild(countrySelect);
         countryContainer.appendChild(select);
     
-        // Champ de saisie du numéro de téléphone
         const phoneContainer = document.createElement("div");
-        phoneContainer.classList.add("flex", "items-center", "space-x-2", "mt-2", "w-full");
+        phoneContainer.classList.add("flex", "items-center", "w-full", "mt-2");
     
+        const selectedCountryContainer = document.createElement("div");
+        selectedCountryContainer.classList.add(
+            "flex",
+            "items-center",
+            "space-x-2",
+            "border",
+            "rounded-l-lg",
+            "px-3",
+            "py-2",
+            "bg-gray-50",
+            "cursor-pointer",
+            "hover:bg-gray-100",
+            "transition-colors"
+        );
+
+        // Ajout d'un tooltip
+        selectedCountryContainer.title = "Cliquer pour changer de pays";
+        
         const input = document.createElement("input");
         input.type = "tel";
         input.placeholder = "Ex: 612345678";
-        input.classList.add("p-2", "border", "rounded-lg", "text-sm", "flex-1");
+        input.classList.add(
+            "flex-1",
+            "p-2",
+            "border",
+            "rounded-r-lg",
+            "text-sm",
+            "focus:outline-none",
+            "focus:ring-2",
+            "focus:ring-blue-500"
+        );
     
+        phoneContainer.appendChild(selectedCountryContainer);
         phoneContainer.appendChild(input);
         countryContainer.appendChild(phoneContainer);
-        messagesDiv.appendChild(countryContainer);
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        const validateBtn = document.createElement("button");
+        validateBtn.textContent = "Valider";
+        validateBtn.classList.add(
+            "w-full",
+            "bg-green-500",
+            "text-white",
+            "py-2",
+            "px-4",
+            "rounded-lg",
+            "mt-2",
+            "hover:bg-green-600",
+            "transition-colors"
+        );
     
-        // Fonction pour gérer la sélection du pays et de son indicatif
         let selectedCode = "";
         let selectedFlag = "";
     
@@ -159,32 +216,41 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedCode = code;
             selectedFlag = flag;
     
-            // Afficher le drapeau et l'indicatif sélectionné
-            const selectedCountryDisplay = document.createElement("div");
-            selectedCountryDisplay.classList.add("flex", "items-center", "space-x-2");
-            selectedCountryDisplay.innerHTML = `<img src="${selectedFlag}" alt="Drapeau sélectionné" style="width: 20px; height: 15px;" /> ${selectedCode}`;
-    
-            // Remplacer l'affichage actuel de la sélection du pays
-            select.innerHTML = ""; // Efface le menu déroulant
-            select.appendChild(selectedCountryDisplay);
-    
-            // Mettre à jour l'input avec l'indicatif sélectionné
+            selectedCountryContainer.innerHTML = '';
+            
+            const flagImg = document.createElement("img");
+            flagImg.src = flag;
+            flagImg.alt = "Drapeau sélectionné";
+            flagImg.style.width = "20px";
+            flagImg.style.height = "15px";
+            
+            const codeSpan = document.createElement("span");
+            codeSpan.textContent = code;
+            
+            selectedCountryContainer.appendChild(flagImg);
+            selectedCountryContainer.appendChild(codeSpan);
+            
+            select.classList.add("hidden");
             input.focus();
         }
+
+        // Permettre de changer de pays en cliquant sur l'indicatif sélectionné
+        selectedCountryContainer.addEventListener("click", function() {
+            select.classList.remove("hidden");
+        });
     
-        // Bouton de validation
-        const validateBtn = document.createElement("button");
-        validateBtn.textContent = "Valider";
-        validateBtn.classList.add("bg-green-500", "text-white", "px-3", "py-1", "rounded-md", "text-sm", "cursor-pointer", "mt-2");
+        validateBtn.addEventListener("click", function() {
+            if (!selectedCode) {
+                sendMessage("Veuillez sélectionner un pays ❌", false);
+                return;
+            }
     
-        validateBtn.addEventListener("click", function () {
-            const phoneNumber = input.value.trim().replace(/\s/g, ''); // Supprime les espaces
+            const phoneNumber = input.value.trim().replace(/\s/g, '');
     
             if (!/^\d{9}$/.test(phoneNumber)) {
                 sendMessage("Numéro invalide ❌. Entrez 9 chiffres sans l'indicatif.", false);
-                // Effacer le champ de saisie et redemander
-                phoneContainer.remove();
-                askPhone();  // Appel récursif pour redemander la saisie
+                input.value = '';
+                input.focus();
                 return;
             }
     
@@ -192,9 +258,11 @@ document.addEventListener("DOMContentLoaded", function () {
             finalizeChat();
         });
     
-        messagesDiv.appendChild(validateBtn);
+        countryContainer.appendChild(validateBtn);
+        messagesDiv.appendChild(countryContainer);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
-    
+
     
     
     
