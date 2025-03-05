@@ -243,6 +243,7 @@ let sectionsVisible = false;
 const contentSections = document.getElementById('content-sections');
 const footer = document.getElementById('footer');
 const quiSommesNousSection = document.getElementById('qui-sommes-nous');
+const chatbot = document.getElementById('chatbot-icon-container');
 
 
 function toggleSections() {
@@ -252,6 +253,7 @@ function toggleSections() {
         footer.classList.remove('hidden');
         contentSections.classList.remove('hidden');
         container.classList.add('h-3/4');
+        
         
 
         quiSommesNousSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -295,6 +297,7 @@ function preventScroll(event) {
 menuToggle.addEventListener("click", () => {
     mobileNavbar.classList.toggle("hidden");
 
+
         
         if (!mobileNavbar.classList.contains("hidden") && !sectionsVisible) {
          // Affiche les sections sans scroll automatique
@@ -302,7 +305,7 @@ menuToggle.addEventListener("click", () => {
     footer.classList.remove("hidden");
     contentSections.classList.remove("hidden");
     container.classList.add("h-3/4");
-    //seeMoreButton.textContent = 'Voir moins ↑';
+    chatbot.classList.remove("hidden");
     }else{
         footer.classList.add("hidden");
         contentSections.classList.add("hidden");
@@ -602,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener("scroll", () => {
     const isScrolled = document.documentElement.scrollTop > 100;
     scrollToTopButton.classList.toggle("hidden", !isScrolled);
+    chatbot.classList.toggle("hidden", !isScrolled);
 });
 
 scrollToTopButton.addEventListener("click", () => {
@@ -617,6 +621,8 @@ scrollToTopButton.addEventListener("click", () => {
 
     scrollStep();
 });
+
+
 
 
 
