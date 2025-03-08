@@ -1,7 +1,7 @@
 {
     "redirects": [
       {
-        "source": "https://mywebspace.fr/:path*",
+        "source": "/:path*",
         "destination": "https://wavora.fr/:path*",
         "permanent": true
       }
