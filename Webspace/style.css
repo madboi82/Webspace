@@ -171,7 +171,9 @@ input, textarea {
     padding-left: 30vw;
     padding-right: 20vw;
     perspective: 1200px; /* Profondeur de la perspective */
-    overflow-x: scroll; /* Empêche le scroll horizontal */
+    overflow-x: auto; /* Empêche le scroll horizontal */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
     
     
 }
@@ -179,8 +181,8 @@ input, textarea {
 
 
 #horizontal-scroll-container::-webkit-scrollbar{
-    width: 8px;
-    height: 6px;
+    
+    display: none;
 }
 
 
@@ -226,6 +228,7 @@ section:hover {
     background: rgba(0, 0, 0, 0.15);
     z-index: 10;
 }
+
 
 
 /* Animations d'ouverture et de fermeture */
@@ -308,6 +311,8 @@ section:hover {
     margin-left: 8px;
     margin-right: 0;
 }
+
+
 
 
 

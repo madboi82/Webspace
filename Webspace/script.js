@@ -153,7 +153,7 @@ const loader = new THREE.GLTFLoader(); // Utilisation correcte avec l'import ES6
 let tv = null;
 
 loader.load(
-    'assets/scène.3D/old_tv.glb',
+    'assets/scène.3D/old_tv.glb2.glb',
     function (gltf) {
         tv = gltf.scene;
         scene.add(tv);
@@ -253,19 +253,16 @@ function toggleSections() {
         footer.classList.remove('hidden');
         contentSections.classList.remove('hidden');
         container.classList.add('h-3/4');
-        
-        
 
         quiSommesNousSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-         // Déclencher les animations après que les sections sont visibles
-         initSectionAnimations();
+        // Initialiser les animations après que les sections sont visibles
+        initSectionAnimations();
     } else {
         footer.classList.add('hidden');
         contentSections.classList.add('hidden');
         container.classList.remove('h-3/4');
         container.classList.add('h-screen');
-        
     }
 }
 
@@ -581,6 +578,8 @@ document.addEventListener('DOMContentLoaded', () => {
         isDragging = false;
     });
 
+    
+
     function animateSections() {
         if (!isDragging) {
             sections.forEach((section) => {
@@ -691,6 +690,7 @@ scrollToTopButton.addEventListener("click", () => {
     document.querySelector("#contact").addEventListener("submit", function(event) {
         sendConversion(); // Envoie la conversion Google Ads
     });
+
     
 });
 
