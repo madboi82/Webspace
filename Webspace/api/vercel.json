@@ -1,0 +1,10 @@
+{
+    "redirects": [
+      {
+        "source": "https://mywebspace.fr/:path*",
+        "destination": "https://wavora.fr/:path*",
+        "permanent": true
+      }
+    ]
+  }
+  
