@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 export default async function handler(req, res) {
     // Ajouter des en-têtes CORS pour autoriser l'accès
-    res.setHeader('Access-Control-Allow-Origin', 'https://wavora.fr/');  // Autoriser ton domaine
+    res.setHeader('Access-Control-Allow-Origin', 'https://wavora.fr');  // Autoriser ton domaine
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');  // Autoriser seulement POST et OPTIONS
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
