@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Configuration de CORS pour autoriser ton domaine spécifique
 app.use(cors({
-    origin: 'https://mywebspace.fr', // Remplace par ton domaine exact
+    origin: 'https://wavora.fr/', // Remplace par ton domaine exact
     methods: 'GET, POST',
     allowedHeaders: 'Content-Type',
 }));
