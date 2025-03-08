@@ -153,7 +153,7 @@ const loader = new THREE.GLTFLoader(); // Utilisation correcte avec l'import ES6
 let tv = null;
 
 loader.load(
-    'assets/scène.3D/old_tv.glb2.glb',
+    'assets/scène.3D/old_tv3.glb',
     function (gltf) {
         tv = gltf.scene;
         scene.add(tv);
