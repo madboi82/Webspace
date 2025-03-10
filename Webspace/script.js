@@ -515,7 +515,7 @@ const pLetters = document.querySelectorAll('#logo p .anim');
 
 // Animation GSAP pour le h2
 gsap.from(h2Letters, {
-    y: 8,            // Mouvement vertical de bas en haut
+    y: 6,            // Mouvement vertical de bas en haut
              // Légère translation horizontale de gauche à droite
     duration: 0.9,     // Durée de l'animation par lettre
     stagger: 0.22,      // Décalage progressif entre les lettres du h2
@@ -526,9 +526,9 @@ gsap.from(h2Letters, {
 
 // Animation GSAP pour le p
 gsap.from(pLetters, {
-    y: 8,            // Mouvement vertical de bas en haut
+    y: 6,            // Mouvement vertical de bas en haut
              // Légère translation horizontale de gauche à droite
-    duration: 0.4,     // Durée de l'animation par lettre
+    duration: 0.3,     // Durée de l'animation par lettre
     stagger: 0.13,      // Décalage progressif entre les lettres du p
     ease: "sine.inOut", // Effet fluide pour l'animation
     repeat: -1,         // Répéter l'animation indéfiniment
