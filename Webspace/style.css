@@ -60,6 +60,7 @@ input, textarea {
 #logo, #logo h2, #logo p {
     font-family: 'Freckle Face', sans-serif;
     position: relative;
+    display: inline-block; 
     z-index: 20;
     opacity: 1 !important;
     visibility: visible !important;
@@ -76,13 +77,23 @@ input, textarea {
     line-height: 1.2;
     font-size: clamp(1.2rem, 3vw, 2rem);
     font-weight: normal;
+    letter-spacing: -2px; /* Réduire l'espacement entre les lettres */
+    
 }
 
 #logo p {
     margin-top: 0;
     line-height: 1.2;
     font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+    letter-spacing: -1px; /* Réduire l'espacement entre les lettres */
 }
+
+#logo span.anim {
+    display: inline-block;
+   
+}
+
+
 
 /* Support Windows */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {

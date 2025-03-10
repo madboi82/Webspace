@@ -506,22 +506,38 @@ document.addEventListener('DOMContentLoaded', () => {
         opacity: 1
     });
 
-    // Animation GSAP pour le logo
-    gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, opacity: 1, duration: 1.5, ease: "power2.out" });
+     // Animation GSAP pour le logo
+     gsap.fromTo("#logo", { rotationY: 1440 }, { rotationY: 0, opacity: 1, duration: 1.5, ease: "power2.out" });
 
-    // Animation GSAP pour le logo : vague fluide de gauche à droite
-    gsap.to("#logo", {
-        x: 5,
-        y: 2,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        stagger: {
-            amount: 0.5,
-            from: "start",
-        }
-    });
+     // Sélectionner toutes les lettres avec la classe anim dans h2 et p
+const h2Letters = document.querySelectorAll('#logo h2 .anim');
+const pLetters = document.querySelectorAll('#logo p .anim');
+
+// Animation GSAP pour le h2
+gsap.from(h2Letters, {
+    y: 8,            // Mouvement vertical de bas en haut
+             // Légère translation horizontale de gauche à droite
+    duration: 0.9,     // Durée de l'animation par lettre
+    stagger: 0.22,      // Décalage progressif entre les lettres du h2
+    ease: "sine.inOut", // Effet fluide pour l'animation
+    repeat: -1,         // Répéter l'animation indéfiniment
+    yoyo: true          // L'animation va de bas en haut puis inversement
+});
+
+// Animation GSAP pour le p
+gsap.from(pLetters, {
+    y: 8,            // Mouvement vertical de bas en haut
+             // Légère translation horizontale de gauche à droite
+    duration: 0.4,     // Durée de l'animation par lettre
+    stagger: 0.13,      // Décalage progressif entre les lettres du p
+    ease: "sine.inOut", // Effet fluide pour l'animation
+    repeat: -1,         // Répéter l'animation indéfiniment
+    yoyo: true,         // L'animation va de bas en haut puis inversement
+    
+});
+
+
+
 
     // Variables pour la rotation des sections
     let isDragging = false;
