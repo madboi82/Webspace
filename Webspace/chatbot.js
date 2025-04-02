@@ -506,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function () {
         sendBtn.disabled = true;
 
         // Envoyer les données à l'API
-        fetch("https://wavora-fioqgaw8l-webspaces-projects-14d59837.vercel.app/api/send-message", {
+        fetch("https://webspace-webspaces-projects-14d59837.vercel.app/api/send-message", {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json"
