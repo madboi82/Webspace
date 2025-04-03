@@ -563,4 +563,3 @@ document.addEventListener("DOMContentLoaded", function () {
         userInput.placeholder = "Écrivez ici...";
     }
 });
-

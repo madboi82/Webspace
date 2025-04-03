@@ -583,7 +583,7 @@ const pLetters = document.querySelectorAll('#logo p .anim');
                 const distanceFromCenter = centerX - window.innerWidth / 2;
                 const rotation = -distanceFromCenter * 0.03;
 
-                section.style.transform = `perspective(1000px) rotateY(${rotation}deg)`;
+                section.style.transform = `perspective(2600px) rotateY(${rotation}deg)`;
             });
         }
         requestAnimationFrame(animateSections);
