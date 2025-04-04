@@ -327,6 +327,13 @@ section:hover {
 
 
 
+@media (max-width: 2000px){
+    #nous-contacter form {
+        max-width: 1100px;
+        padding: 3rem;
+    }
+}
+
 
 
 
@@ -370,6 +377,19 @@ section:hover {
         width: 70vw;
         min-width: 70vw;
         max-height: 40vh;
+    }
+
+    #nous-contacter form {
+        width: 80%;
+        height: auto; /* s'ajuste au contenu */
+        max-width: 900px;
+        padding: 2.5rem;
+    }
+
+    #nous-contacter input,
+    #nous-contacter textarea {
+        font-size: 1.1rem;
+        padding: 1rem;
     }
 
     
